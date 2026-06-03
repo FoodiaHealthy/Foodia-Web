@@ -48,26 +48,34 @@
         .mobile-lang button.active{background:var(--orange);border-color:var(--orange);color:white}
 
         /* HERO */
-        .hero{background:var(--navy);min-height:100vh;display:flex;align-items:center;padding:110px 40px 72px;position:relative;overflow:hidden;gap:40px}
+        .hero{background:var(--navy);padding:130px 40px 64px;position:relative;overflow:hidden;text-align:center}
         .hero::before{content:'';position:absolute;top:-250px;right:-250px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(123,110,246,.14) 0%,transparent 70%);pointer-events:none}
         .hero::after{content:'';position:absolute;bottom:-150px;left:-150px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(224,115,64,.1) 0%,transparent 70%);pointer-events:none}
-        .hero-content{flex:1;max-width:540px;position:relative;z-index:2}
+        .hero-content{max-width:700px;margin:0 auto;position:relative;z-index:2}
         .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(224,115,64,.15);border:1px solid rgba(224,115,64,.3);color:var(--orange);padding:6px 16px;border-radius:50px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:28px}
-        .hero h1{font-size:72px;font-weight:900;color:white;line-height:1.02;letter-spacing:-3px;margin-bottom:20px}
+        .hero h1{font-size:80px;font-weight:900;color:white;line-height:1.02;letter-spacing:-3px;margin-bottom:20px}
         .hero h1 span{color:var(--orange)}
-        .hero-sub{font-size:18px;color:rgba(255,255,255,.6);line-height:1.65;margin-bottom:44px;max-width:440px}
-        .hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+        .hero-sub{font-size:19px;color:rgba(255,255,255,.6);line-height:1.65;margin-bottom:44px;max-width:560px;margin-left:auto;margin-right:auto}
+        .hero-btns{display:flex;gap:14px;flex-wrap:wrap;justify-content:center}
         .btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--orange);color:white;padding:16px 32px;border-radius:50px;font-size:16px;font-weight:700;text-decoration:none;transition:background .2s,transform .2s}
         .btn-primary:hover{background:var(--orange-dk);transform:translateY(-2px)}
         .btn-ghost{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.08);color:white;padding:16px 32px;border-radius:50px;font-size:16px;font-weight:600;text-decoration:none;border:1px solid rgba(255,255,255,.18);transition:background .2s}
         .btn-ghost:hover{background:rgba(255,255,255,.14)}
-        .hero-stats{display:flex;gap:44px;margin-top:56px}
+        .hero-stats{display:flex;gap:44px;margin-top:56px;justify-content:center}
         .stat-val{display:block;font-size:30px;font-weight:900;color:white;line-height:1}
         .stat-val em{color:var(--orange);font-style:normal}
         .stat-lbl{display:block;font-size:12px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
-        .hero-phones{flex:1;display:flex;justify-content:center;align-items:flex-end;position:relative;z-index:2}
-        .phone-wrap img{height:580px;border-radius:42px;box-shadow:0 48px 96px rgba(0,0,0,.55);display:block}
-        .phone-back{position:absolute;right:-72px;bottom:0;opacity:.55;transform:scale(.82) translateY(24px);transform-origin:bottom right;z-index:-1}
+
+        /* SCREENSHOT CAROUSEL */
+        .screenshots{background:var(--navy);padding:60px 0 80px;overflow:hidden}
+        .marquee-wrap{position:relative;overflow:hidden}
+        .marquee-wrap::before,.marquee-wrap::after{content:'';position:absolute;top:0;bottom:0;width:140px;z-index:2;pointer-events:none}
+        .marquee-wrap::before{left:0;background:linear-gradient(to right,var(--navy),transparent)}
+        .marquee-wrap::after{right:0;background:linear-gradient(to left,var(--navy),transparent)}
+        .marquee-track{display:flex;gap:18px;width:max-content;animation:marquee 40s linear infinite}
+        .marquee-track:hover{animation-play-state:paused}
+        @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+        .marquee-phone{height:500px;border-radius:36px;box-shadow:0 20px 48px rgba(0,0,0,.5);display:block;flex-shrink:0}
 
         /* SECTION CHROME */
         .lbl{text-align:center;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:10px}
@@ -159,12 +167,9 @@
 
         /* RESPONSIVE */
         @media(max-width:960px){
-            .hero{flex-direction:column;padding:100px 24px 64px;text-align:center}
-            .hero h1{font-size:50px;letter-spacing:-2px}
-            .hero-sub{max-width:100%}
-            .hero-btns,.hero-stats{justify-content:center}
-            .hero-phones{margin-top:40px}
-            .phone-back{display:none}
+            .hero{padding:100px 24px 52px}
+            .hero h1{font-size:52px;letter-spacing:-2px}
+            .marquee-phone{height:380px}
             .row,.row.rev{flex-direction:column;gap:40px}
             .row-phones{gap:12px}
             .ph{height:360px} .ph.tall{height:400px}
@@ -178,7 +183,8 @@
             .foot-links{justify-content:center}
         }
         @media(max-width:480px){
-            .hero h1{font-size:38px}
+            .hero h1{font-size:36px}
+            .marquee-phone{height:300px}
             .ttl{font-size:30px}
             .row-content h2{font-size:28px}
             .dl-cta h2{font-size:34px}
@@ -249,10 +255,30 @@
             <div><span class="stat-val">Free<em>*</em></span><span class="stat-lbl" data-i18n="hero.stat3">To start</span></div>
         </div>
     </div>
-    <div class="hero-phones">
-        <div class="phone-wrap">
-            <img src="Capturas/IMG_1967.jpeg" alt="Foodia dashboard">
-            <div class="phone-back"><img src="Capturas/IMG_1969.jpeg" alt="Foodia AI analysis"></div>
+</section>
+
+<!-- SCREENSHOT CAROUSEL -->
+<section class="screenshots">
+    <div class="marquee-wrap">
+        <div class="marquee-track">
+            <!-- set 1 -->
+            <img class="marquee-phone" src="Capturas/IMG_1967.jpeg" alt="Dashboard">
+            <img class="marquee-phone" src="Capturas/IMG_1968.jpeg" alt="Macros">
+            <img class="marquee-phone" src="Capturas/IMG_1969.jpeg" alt="Analyze food">
+            <img class="marquee-phone" src="Capturas/IMG_1970.jpeg" alt="Nutrition facts">
+            <img class="marquee-phone" src="Capturas/IMG_1971.jpeg" alt="Exercise">
+            <img class="marquee-phone" src="Capturas/IMG_1972.jpeg" alt="Progress calendar">
+            <img class="marquee-phone" src="Capturas/IMG_1973.jpeg" alt="Meals detail">
+            <img class="marquee-phone" src="Capturas/IMG_1974.jpeg" alt="Profile">
+            <!-- set 2 — duplicate for seamless loop -->
+            <img class="marquee-phone" src="Capturas/IMG_1967.jpeg" alt="Dashboard">
+            <img class="marquee-phone" src="Capturas/IMG_1968.jpeg" alt="Macros">
+            <img class="marquee-phone" src="Capturas/IMG_1969.jpeg" alt="Analyze food">
+            <img class="marquee-phone" src="Capturas/IMG_1970.jpeg" alt="Nutrition facts">
+            <img class="marquee-phone" src="Capturas/IMG_1971.jpeg" alt="Exercise">
+            <img class="marquee-phone" src="Capturas/IMG_1972.jpeg" alt="Progress calendar">
+            <img class="marquee-phone" src="Capturas/IMG_1973.jpeg" alt="Meals detail">
+            <img class="marquee-phone" src="Capturas/IMG_1974.jpeg" alt="Profile">
         </div>
     </div>
 </section>
