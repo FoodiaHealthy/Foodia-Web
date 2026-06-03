@@ -51,7 +51,7 @@
         .hero{background:var(--navy);min-height:100vh;display:flex;align-items:center;padding:110px 40px 72px;position:relative;overflow:hidden;gap:40px}
         .hero::before{content:'';position:absolute;top:-250px;right:-250px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(123,110,246,.14) 0%,transparent 70%);pointer-events:none}
         .hero::after{content:'';position:absolute;bottom:-150px;left:-150px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(224,115,64,.1) 0%,transparent 70%);pointer-events:none}
-        .hero-content{flex:0 0 auto;max-width:520px;position:relative;z-index:2}
+        .hero-content{flex:1;max-width:540px;position:relative;z-index:2}
         .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(224,115,64,.15);border:1px solid rgba(224,115,64,.3);color:var(--orange);padding:6px 16px;border-radius:50px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:28px}
         .hero h1{font-size:72px;font-weight:900;color:white;line-height:1.02;letter-spacing:-3px;margin-bottom:20px}
         .hero h1 span{color:var(--orange)}
@@ -65,14 +65,9 @@
         .stat-val{display:block;font-size:30px;font-weight:900;color:white;line-height:1}
         .stat-val em{color:var(--orange);font-style:normal}
         .stat-lbl{display:block;font-size:12px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
-
-        /* DRAGGABLE PHONE CAROUSEL */
-        .hero-carousel{flex:1;min-width:0;position:relative;overflow:hidden;display:flex;align-items:center;z-index:2;min-height:620px}
-        .c-track{display:flex;gap:20px;align-items:center;position:absolute;left:0;top:0;bottom:0;margin:auto 0;height:fit-content;cursor:grab;user-select:none;touch-action:pan-y;will-change:transform;transition:transform .38s cubic-bezier(.25,.46,.45,.94)}
-        .c-track.grabbing{cursor:grabbing;transition:none}
-        .c-slide{flex-shrink:0;transition:transform .38s ease,filter .38s ease,opacity .38s ease;transform:scale(.82);filter:blur(4px);opacity:.5;transform-origin:center center}
-        .c-slide.active{transform:scale(1);filter:none;opacity:1}
-        .c-slide img{height:560px;border-radius:42px;box-shadow:0 40px 80px rgba(0,0,0,.55);display:block;pointer-events:none;-webkit-user-drag:none;user-select:none}
+        .hero-phones{flex:1;display:flex;justify-content:center;align-items:flex-end;position:relative;z-index:2}
+        .phone-wrap img{height:580px;border-radius:42px;box-shadow:0 48px 96px rgba(0,0,0,.55);display:block}
+        .phone-back{position:absolute;right:-72px;bottom:0;opacity:.55;transform:scale(.82) translateY(24px);transform-origin:bottom right;z-index:-1}
 
         /* SECTION CHROME */
         .lbl{text-align:center;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:10px}
@@ -164,13 +159,12 @@
 
         /* RESPONSIVE */
         @media(max-width:960px){
-            .hero{flex-direction:column;padding:100px 24px 64px}
+            .hero{flex-direction:column;padding:100px 24px 64px;text-align:center}
             .hero h1{font-size:50px;letter-spacing:-2px}
             .hero-sub{max-width:100%}
             .hero-btns,.hero-stats{justify-content:center}
-            .hero-content{text-align:center;max-width:100%}
-            .hero-carousel{width:100%;min-height:440px}
-            .c-slide img{height:400px}
+            .hero-phones{margin-top:40px}
+            .phone-back{display:none}
             .row,.row.rev{flex-direction:column;gap:40px}
             .row-phones{gap:12px}
             .ph{height:360px} .ph.tall{height:400px}
@@ -185,7 +179,7 @@
         }
         @media(max-width:480px){
             .hero h1{font-size:36px}
-            .c-slide img{height:320px}
+            .phone-wrap img{height:440px}
             .ttl{font-size:30px}
             .row-content h2{font-size:28px}
             .dl-cta h2{font-size:34px}
@@ -256,16 +250,10 @@
             <div><span class="stat-val">Free<em>*</em></span><span class="stat-lbl" data-i18n="hero.stat3">To start</span></div>
         </div>
     </div>
-    <div class="hero-carousel">
-        <div class="c-track" id="cTrack">
-            <div class="c-slide active"><img src="Capturas/IMG_1967.jpeg" alt="Dashboard"></div>
-            <div class="c-slide"><img src="Capturas/IMG_1968.jpeg" alt="Macros"></div>
-            <div class="c-slide"><img src="Capturas/IMG_1969.jpeg" alt="Analyze food"></div>
-            <div class="c-slide"><img src="Capturas/IMG_1970.jpeg" alt="Nutrition facts"></div>
-            <div class="c-slide"><img src="Capturas/IMG_1971.jpeg" alt="Exercise"></div>
-            <div class="c-slide"><img src="Capturas/IMG_1972.jpeg" alt="Progress calendar"></div>
-            <div class="c-slide"><img src="Capturas/IMG_1973.jpeg" alt="Meals detail"></div>
-            <div class="c-slide"><img src="Capturas/IMG_1974.jpeg" alt="Profile"></div>
+    <div class="hero-phones">
+        <div class="phone-wrap">
+            <img src="Capturas/IMG_1967.jpeg" alt="Foodia dashboard">
+            <div class="phone-back"><img src="Capturas/IMG_1969.jpeg" alt="Foodia AI analysis"></div>
         </div>
     </div>
 </section>
@@ -471,70 +459,6 @@ document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click
 // Load default language
 setLang('en');
 
-// DRAGGABLE PHONE CAROUSEL
-(function(){
-    const track = document.getElementById('cTrack');
-    if (!track) return;
-    const carousel = track.parentElement;
-    const slides = Array.from(track.querySelectorAll('.c-slide'));
-    let cur = 0, startX = 0, delta = 0, dragging = false;
-
-    function slideStep() {
-        return slides[0].offsetWidth + 20; // width + gap
-    }
-    function calcOffset(i) {
-        // Position active slide with ~24px from left edge, peek of next visible
-        return 24 - i * slideStep();
-    }
-    function goTo(i, snap) {
-        cur = Math.max(0, Math.min(i, slides.length - 1));
-        slides.forEach((s, j) => s.classList.toggle('active', j === cur));
-        if (snap !== false) {
-            track.classList.remove('grabbing');
-        }
-        track.style.transform = `translateX(${calcOffset(cur)}px)`;
-    }
-
-    // Mouse
-    track.addEventListener('mousedown', e => {
-        dragging = true; startX = e.clientX; delta = 0;
-        track.classList.add('grabbing');
-        e.preventDefault();
-    });
-    document.addEventListener('mousemove', e => {
-        if (!dragging) return;
-        delta = e.clientX - startX;
-        track.style.transform = `translateX(${calcOffset(cur) + delta}px)`;
-    });
-    document.addEventListener('mouseup', () => {
-        if (!dragging) return;
-        dragging = false;
-        if (delta < -60) goTo(cur + 1);
-        else if (delta > 60) goTo(cur - 1);
-        else goTo(cur);
-        delta = 0;
-    });
-
-    // Touch
-    track.addEventListener('touchstart', e => {
-        startX = e.touches[0].clientX; delta = 0;
-        track.classList.add('grabbing');
-    }, {passive: true});
-    track.addEventListener('touchmove', e => {
-        delta = e.touches[0].clientX - startX;
-        track.style.transform = `translateX(${calcOffset(cur) + delta}px)`;
-    }, {passive: true});
-    track.addEventListener('touchend', () => {
-        if (delta < -60) goTo(cur + 1);
-        else if (delta > 60) goTo(cur - 1);
-        else goTo(cur);
-        delta = 0;
-    });
-
-    // Init after layout is ready
-    window.addEventListener('load', () => goTo(0));
-    goTo(0);
-}());
 
 </script>
 </body>
