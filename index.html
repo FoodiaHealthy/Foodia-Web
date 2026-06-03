@@ -7,687 +7,289 @@
     <meta name="description" content="Track your food, exercise, and nutrition with AI. Foodia analyzes your meals instantly with just a photo.">
     <style>
         :root {
-            --navy:       #1A1F3A;
-            --navy-light: #252B4A;
-            --orange:     #E07340;
-            --orange-dk:  #C5612E;
-            --purple:     #7B6EF6;
-            --green:      #4CAF50;
-            --bg:         #F5F6FA;
-            --white:      #FFFFFF;
-            --text:       #1A1F3A;
-            --muted:      #6B7280;
-            --border:     #E5E7EB;
+            --navy:#1A1F3A; --navy-l:#252B4A; --orange:#E07340; --orange-dk:#C5612E;
+            --purple:#7B6EF6; --green:#4CAF50; --bg:#F5F6FA; --white:#fff;
+            --text:#1A1F3A; --muted:#6B7280; --border:#E5E7EB;
         }
-        *  { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            color: var(--text);
-            background: var(--white);
-            overflow-x: hidden;
-        }
+        *{margin:0;padding:0;box-sizing:border-box}
+        html{scroll-behavior:smooth}
+        body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;color:var(--text);background:var(--white);overflow-x:hidden}
 
-        /* ── NAV ── */
-        nav {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            z-index: 100;
-            padding: 16px 48px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(26,31,58,0.96);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-        }
-        .nav-logo {
-            color: white;
-            font-size: 22px;
-            font-weight: 800;
-            text-decoration: none;
-            letter-spacing: -0.5px;
-        }
-        .nav-logo span { color: var(--orange); }
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            list-style: none;
-            align-items: center;
-        }
-        .nav-links a {
-            color: rgba(255,255,255,0.65);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 500;
-            transition: color .2s;
-        }
-        .nav-links a:hover { color: white; }
-        .nav-cta {
-            background: var(--orange) !important;
-            color: white !important;
-            padding: 8px 22px;
-            border-radius: 50px;
-            font-weight: 700 !important;
-        }
-        .hamburger {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 4px;
-        }
-        .hamburger span {
-            display: block;
-            width: 24px;
-            height: 2px;
-            background: white;
-            border-radius: 2px;
-            transition: all .25s;
-        }
+        /* NAV */
+        nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 40px;display:flex;align-items:center;justify-content:space-between;gap:16px;background:rgba(26,31,58,.97);backdrop-filter:blur(12px)}
+        .nav-logo{color:white;font-size:22px;font-weight:800;text-decoration:none;flex-shrink:0}
+        .nav-logo span{color:var(--orange)}
+        .nav-links{display:flex;gap:24px;list-style:none;align-items:center}
+        .nav-links a{color:rgba(255,255,255,.65);text-decoration:none;font-size:14px;font-weight:500;transition:color .2s;white-space:nowrap}
+        .nav-links a:hover{color:white}
+        .nav-cta{background:var(--orange)!important;color:white!important;padding:7px 18px;border-radius:50px;font-weight:700!important}
+        .nav-right{display:flex;align-items:center;gap:16px}
 
-        /* ── HERO ── */
-        .hero {
-            background: var(--navy);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            padding: 110px 48px 72px;
-            position: relative;
-            overflow: hidden;
-            gap: 40px;
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -250px; right: -250px;
-            width: 700px; height: 700px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(123,110,246,.14) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        .hero::after {
-            content: '';
-            position: absolute;
-            bottom: -150px; left: -150px;
-            width: 500px; height: 500px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(224,115,64,.1) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        .hero-content {
-            flex: 1;
-            max-width: 540px;
-            position: relative;
-            z-index: 2;
-        }
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(224,115,64,.15);
-            border: 1px solid rgba(224,115,64,.3);
-            color: var(--orange);
-            padding: 6px 16px;
-            border-radius: 50px;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 28px;
-        }
-        .hero h1 {
-            font-size: 76px;
-            font-weight: 900;
-            color: white;
-            line-height: 1.02;
-            letter-spacing: -3px;
-            margin-bottom: 20px;
-        }
-        .hero h1 span { color: var(--orange); }
-        .hero-sub {
-            font-size: 19px;
-            color: rgba(255,255,255,.6);
-            line-height: 1.6;
-            margin-bottom: 44px;
-            max-width: 440px;
-        }
-        .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
-        .btn-primary {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: var(--orange);
-            color: white;
-            padding: 16px 32px;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: 700;
-            text-decoration: none;
-            transition: background .2s, transform .2s;
-        }
-        .btn-primary:hover { background: var(--orange-dk); transform: translateY(-2px); }
-        .btn-ghost {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: rgba(255,255,255,.08);
-            color: white;
-            padding: 16px 32px;
-            border-radius: 50px;
-            font-size: 16px;
-            font-weight: 600;
-            text-decoration: none;
-            border: 1px solid rgba(255,255,255,.18);
-            transition: background .2s;
-        }
-        .btn-ghost:hover { background: rgba(255,255,255,.14); }
-        .hero-stats {
-            display: flex;
-            gap: 44px;
-            margin-top: 56px;
-        }
-        .stat-val {
-            display: block;
-            font-size: 30px;
-            font-weight: 900;
-            color: white;
-            line-height: 1;
-        }
-        .stat-val em { color: var(--orange); font-style: normal; }
-        .stat-lbl {
-            display: block;
-            font-size: 12px;
-            color: rgba(255,255,255,.45);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 4px;
-        }
-        .hero-phones {
-            flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            position: relative;
-            z-index: 2;
-            gap: 0;
-        }
-        .phone-wrap { position: relative; }
-        .phone-wrap img {
-            height: 580px;
-            border-radius: 42px;
-            box-shadow: 0 48px 96px rgba(0,0,0,.55);
-            display: block;
-        }
-        .phone-back {
-            position: absolute;
-            right: -72px;
-            bottom: 0;
-            opacity: .55;
-            transform: scale(.82) translateY(24px);
-            transform-origin: bottom right;
-            z-index: -1;
-        }
+        /* LANG DROPDOWN */
+        .lang-drop{position:relative}
+        .lang-trigger{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:white;padding:6px 12px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:5px;transition:background .2s;font-family:inherit}
+        .lang-trigger:hover{background:rgba(255,255,255,.16)}
+        .lang-menu{display:none;position:absolute;top:calc(100% + 8px);right:0;background:var(--navy-l);border:1px solid rgba(255,255,255,.12);border-radius:12px;overflow:hidden;min-width:150px;box-shadow:0 16px 40px rgba(0,0,0,.4)}
+        .lang-drop.open .lang-menu{display:block}
+        .lang-menu button{display:flex;align-items:center;gap:8px;width:100%;padding:10px 16px;background:none;border:none;color:rgba(255,255,255,.75);font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;transition:background .15s}
+        .lang-menu button:hover{background:rgba(255,255,255,.08);color:white}
+        .lang-menu button.active{color:white;font-weight:700}
 
-        /* ── SECTION CHROME ── */
-        .lbl {
-            text-align: center;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: var(--orange);
-            margin-bottom: 10px;
-        }
-        .ttl {
-            text-align: center;
-            font-size: 44px;
-            font-weight: 900;
-            color: var(--text);
-            margin-bottom: 14px;
-            letter-spacing: -1.5px;
-            line-height: 1.1;
-        }
-        .sub {
-            text-align: center;
-            font-size: 18px;
-            color: var(--muted);
-            max-width: 560px;
-            margin: 0 auto 64px;
-            line-height: 1.65;
-        }
+        /* HAMBURGER */
+        .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px;flex-shrink:0}
+        .hamburger span{display:block;width:24px;height:2px;background:white;border-radius:2px}
+        .mobile-nav{display:none;flex-direction:column;gap:4px;position:fixed;top:56px;left:0;right:0;background:rgba(26,31,58,.98);backdrop-filter:blur(12px);padding:12px 24px 20px;z-index:99;border-bottom:1px solid rgba(255,255,255,.08)}
+        .mobile-nav.open{display:flex}
+        .mobile-nav a{color:rgba(255,255,255,.75);text-decoration:none;font-size:16px;font-weight:600;padding:11px 8px;border-bottom:1px solid rgba(255,255,255,.06);transition:color .2s}
+        .mobile-nav a:last-of-type{border-bottom:none}
+        .mobile-nav a:hover{color:white}
+        .mobile-lang{display:flex;gap:8px;flex-wrap:wrap;padding:12px 8px 4px}
+        .mobile-lang button{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);padding:6px 12px;border-radius:50px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+        .mobile-lang button.active{background:var(--orange);border-color:var(--orange);color:white}
 
-        /* ── FEATURE CARDS ── */
-        .features { background: var(--bg); padding: 104px 48px; }
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            max-width: 1180px;
-            margin: 0 auto;
-        }
-        .card {
-            background: white;
-            border-radius: 24px;
-            padding: 36px 30px;
-            border: 1px solid var(--border);
-            transition: transform .22s, box-shadow .22s;
-        }
-        .card:hover { transform: translateY(-5px); box-shadow: 0 24px 48px rgba(0,0,0,.08); }
-        .card-icon {
-            width: 52px; height: 52px;
-            border-radius: 14px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 26px;
-            margin-bottom: 20px;
-        }
-        .ic-or { background: rgba(224,115,64,.12); }
-        .ic-pu { background: rgba(123,110,246,.12); }
-        .ic-gr { background: rgba(76,175,80,.12); }
-        .ic-bl { background: rgba(59,130,246,.12); }
-        .card h3 { font-size: 19px; font-weight: 700; margin-bottom: 10px; }
-        .card p  { font-size: 15px; color: var(--muted); line-height: 1.6; }
+        /* HERO */
+        .hero{background:var(--navy);min-height:100vh;display:flex;align-items:center;padding:110px 40px 72px;position:relative;overflow:hidden;gap:40px}
+        .hero::before{content:'';position:absolute;top:-250px;right:-250px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(123,110,246,.14) 0%,transparent 70%);pointer-events:none}
+        .hero::after{content:'';position:absolute;bottom:-150px;left:-150px;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(224,115,64,.1) 0%,transparent 70%);pointer-events:none}
+        .hero-content{flex:1;max-width:540px;position:relative;z-index:2}
+        .hero-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(224,115,64,.15);border:1px solid rgba(224,115,64,.3);color:var(--orange);padding:6px 16px;border-radius:50px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:28px}
+        .hero h1{font-size:72px;font-weight:900;color:white;line-height:1.02;letter-spacing:-3px;margin-bottom:20px}
+        .hero h1 span{color:var(--orange)}
+        .hero-sub{font-size:18px;color:rgba(255,255,255,.6);line-height:1.65;margin-bottom:44px;max-width:440px}
+        .hero-btns{display:flex;gap:14px;flex-wrap:wrap}
+        .btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--orange);color:white;padding:16px 32px;border-radius:50px;font-size:16px;font-weight:700;text-decoration:none;transition:background .2s,transform .2s}
+        .btn-primary:hover{background:var(--orange-dk);transform:translateY(-2px)}
+        .btn-ghost{display:inline-flex;align-items:center;gap:10px;background:rgba(255,255,255,.08);color:white;padding:16px 32px;border-radius:50px;font-size:16px;font-weight:600;text-decoration:none;border:1px solid rgba(255,255,255,.18);transition:background .2s}
+        .btn-ghost:hover{background:rgba(255,255,255,.14)}
+        .hero-stats{display:flex;gap:44px;margin-top:56px}
+        .stat-val{display:block;font-size:30px;font-weight:900;color:white;line-height:1}
+        .stat-val em{color:var(--orange);font-style:normal}
+        .stat-lbl{display:block;font-size:12px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:1px;margin-top:4px}
+        .hero-phones{flex:1;display:flex;justify-content:center;align-items:flex-end;position:relative;z-index:2}
+        .phone-wrap img{height:580px;border-radius:42px;box-shadow:0 48px 96px rgba(0,0,0,.55);display:block}
+        .phone-back{position:absolute;right:-72px;bottom:0;opacity:.55;transform:scale(.82) translateY(24px);transform-origin:bottom right;z-index:-1}
 
-        /* ── SHOWCASE ROWS ── */
-        .showcase { padding: 104px 48px; background: white; }
-        .showcase.alt { background: var(--bg); }
-        .row {
-            max-width: 1180px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            gap: 80px;
-        }
-        .row.rev { flex-direction: row-reverse; }
-        .row-content { flex: 1; }
-        .row-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(123,110,246,.1);
-            color: var(--purple);
-            padding: 6px 14px;
-            border-radius: 50px;
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-        .row-tag.or { background: rgba(224,115,64,.1); color: var(--orange); }
-        .row-tag.gr { background: rgba(76,175,80,.1); color: var(--green); }
-        .row-content h2 {
-            font-size: 42px;
-            font-weight: 900;
-            line-height: 1.08;
-            letter-spacing: -1.5px;
-            margin-bottom: 18px;
-        }
-        .row-content p {
-            font-size: 17px;
-            color: var(--muted);
-            line-height: 1.7;
-            margin-bottom: 30px;
-        }
-        .check-list { list-style: none; display: flex; flex-direction: column; gap: 11px; }
-        .check-list li {
-            display: flex; align-items: center;
-            gap: 12px;
-            font-size: 15px; font-weight: 500;
-        }
-        .check-list li::before {
-            content: '✓';
-            width: 22px; height: 22px;
-            background: rgba(76,175,80,.12);
-            color: var(--green);
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 12px; font-weight: 700;
-            flex-shrink: 0;
-        }
-        .row-phones { flex: 1; display: flex; justify-content: center; gap: 18px; }
-        .ph {
-            border-radius: 36px;
-            box-shadow: 0 28px 64px rgba(0,0,0,.13);
-            height: 480px;
-        }
-        .ph.tall { height: 520px; }
+        /* SECTION CHROME */
+        .lbl{text-align:center;font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--orange);margin-bottom:10px}
+        .ttl{text-align:center;font-size:44px;font-weight:900;color:var(--text);margin-bottom:14px;letter-spacing:-1.5px;line-height:1.1}
+        .sub{text-align:center;font-size:18px;color:var(--muted);max-width:560px;margin:0 auto 64px;line-height:1.65}
 
-        /* ── PRO ── */
-        .pro {
-            background: var(--navy);
-            padding: 104px 48px;
-            position: relative;
-            overflow: hidden;
-        }
-        .pro::before {
-            content: '';
-            position: absolute;
-            top: -300px; right: -200px;
-            width: 800px; height: 800px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(123,110,246,.1) 0%, transparent 70%);
-            pointer-events: none;
-        }
-        .pro .lbl { color: var(--orange); }
-        .pro .ttl { color: white; }
-        .pro .sub  { color: rgba(255,255,255,.55); }
-        .pro-inner { max-width: 860px; margin: 0 auto; position: relative; z-index: 2; }
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 22px;
-        }
-        .price-card {
-            background: rgba(255,255,255,.06);
-            border: 1px solid rgba(255,255,255,.1);
-            border-radius: 24px;
-            padding: 40px 36px;
-        }
-        .price-card.hot {
-            background: var(--orange);
-            border-color: var(--orange);
-            position: relative;
-        }
-        .hot-badge {
-            position: absolute;
-            top: -13px; left: 50%;
-            transform: translateX(-50%);
-            background: #FFD43B;
-            color: #1A1F3A;
-            padding: 4px 18px;
-            border-radius: 50px;
-            font-size: 11px;
-            font-weight: 800;
-            white-space: nowrap;
-            text-transform: uppercase;
-            letter-spacing: .5px;
-        }
-        .price-plan {
-            font-size: 13px; font-weight: 700;
-            color: rgba(255,255,255,.6);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 12px;
-        }
-        .price-amount {
-            font-size: 58px; font-weight: 900;
-            color: white; line-height: 1;
-            margin-bottom: 6px;
-        }
-        .price-period {
-            font-size: 14px;
-            color: rgba(255,255,255,.55);
-            margin-bottom: 32px;
-        }
-        .price-list { list-style: none; display: flex; flex-direction: column; gap: 13px; margin-bottom: 36px; }
-        .price-list li {
-            display: flex; align-items: center;
-            gap: 10px;
-            font-size: 15px; color: rgba(255,255,255,.85);
-        }
-        .price-list li::before {
-            content: '✓';
-            width: 20px; height: 20px;
-            background: rgba(255,255,255,.2);
-            color: white;
-            border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 11px; font-weight: 700;
-            flex-shrink: 0;
-        }
-        .btn-white {
-            display: block; text-align: center;
-            background: white; color: var(--navy);
-            padding: 14px; border-radius: 50px;
-            font-size: 15px; font-weight: 700;
-            text-decoration: none;
-            transition: opacity .2s;
-        }
-        .btn-white:hover { opacity: .88; }
-        .btn-outline-w {
-            display: block; text-align: center;
-            background: transparent; color: white;
-            padding: 14px; border-radius: 50px;
-            font-size: 15px; font-weight: 700;
-            text-decoration: none;
-            border: 2px solid rgba(255,255,255,.3);
-            transition: background .2s;
-        }
-        .btn-outline-w:hover { background: rgba(255,255,255,.1); }
-        .pro-perks {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 16px;
-            margin-top: 56px;
-        }
-        .perk { text-align: center; padding: 20px 12px; }
-        .perk-icon { font-size: 34px; margin-bottom: 12px; }
-        .perk h4 { font-size: 15px; font-weight: 700; color: white; margin-bottom: 6px; }
-        .perk p  { font-size: 13px; color: rgba(255,255,255,.45); line-height: 1.5; }
+        /* FEATURES */
+        .features{background:var(--bg);padding:104px 40px}
+        .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;max-width:1180px;margin:0 auto}
+        .card{background:white;border-radius:24px;padding:36px 30px;border:1px solid var(--border);transition:transform .22s,box-shadow .22s}
+        .card:hover{transform:translateY(-5px);box-shadow:0 24px 48px rgba(0,0,0,.08)}
+        .card-icon{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:20px}
+        .ic-or{background:rgba(224,115,64,.12)} .ic-pu{background:rgba(123,110,246,.12)}
+        .ic-gr{background:rgba(76,175,80,.12)}  .ic-bl{background:rgba(59,130,246,.12)}
+        .card h3{font-size:19px;font-weight:700;margin-bottom:10px}
+        .card p{font-size:15px;color:var(--muted);line-height:1.6}
 
-        /* ── LANGUAGES ── */
-        .langs { padding: 80px 48px; background: var(--bg); text-align: center; }
-        .lang-pills { display: flex; justify-content: center; flex-wrap: wrap; gap: 12px; margin-top: 32px; }
-        .pill {
-            background: white;
-            border: 1px solid var(--border);
-            padding: 11px 24px;
-            border-radius: 50px;
-            font-size: 15px; font-weight: 600;
-            display: flex; align-items: center; gap: 8px;
-        }
+        /* SHOWCASE ROWS */
+        .showcase{padding:104px 40px;background:white}
+        .showcase.alt{background:var(--bg)}
+        .row{max-width:1180px;margin:0 auto;display:flex;align-items:center;gap:80px}
+        .row.rev{flex-direction:row-reverse}
+        .row-content{flex:1}
+        .row-tag{display:inline-flex;align-items:center;gap:6px;background:rgba(123,110,246,.1);color:var(--purple);padding:6px 14px;border-radius:50px;font-size:13px;font-weight:600;margin-bottom:20px}
+        .row-tag.or{background:rgba(224,115,64,.1);color:var(--orange)}
+        .row-tag.gr{background:rgba(76,175,80,.1);color:var(--green)}
+        .row-content h2{font-size:42px;font-weight:900;line-height:1.08;letter-spacing:-1.5px;margin-bottom:18px}
+        .row-content p{font-size:17px;color:var(--muted);line-height:1.7;margin-bottom:30px}
+        .check-list{list-style:none;display:flex;flex-direction:column;gap:11px}
+        .check-list li{display:flex;align-items:center;gap:12px;font-size:15px;font-weight:500}
+        .check-list li::before{content:'✓';width:22px;height:22px;background:rgba(76,175,80,.12);color:var(--green);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+        .row-phones{flex:1;display:flex;justify-content:center;gap:18px}
+        .ph{border-radius:36px;box-shadow:0 28px 64px rgba(0,0,0,.13);height:480px}
+        .ph.tall{height:520px}
 
-        /* ── DOWNLOAD CTA ── */
-        .dl-cta { padding: 104px 48px; background: white; text-align: center; }
-        .dl-cta h2 {
-            font-size: 54px; font-weight: 900;
-            letter-spacing: -2px; margin-bottom: 16px;
-        }
-        .dl-cta p { font-size: 18px; color: var(--muted); margin-bottom: 44px; }
-        .store-btn {
-            display: inline-flex; align-items: center; gap: 16px;
-            background: var(--navy); color: white;
-            padding: 18px 40px; border-radius: 20px;
-            text-decoration: none;
-            transition: transform .2s, opacity .2s;
-        }
-        .store-btn:hover { transform: translateY(-3px); opacity: .92; }
-        .store-btn svg { width: 36px; height: 36px; }
-        .store-txt small { display: block; font-size: 11px; opacity: .6; text-transform: uppercase; letter-spacing: .5px; }
-        .store-txt strong { display: block; font-size: 22px; font-weight: 700; }
+        /* PRO SECTION */
+        .pro{background:var(--navy);padding:104px 40px;position:relative;overflow:hidden}
+        .pro::before{content:'';position:absolute;top:-300px;right:-200px;width:800px;height:800px;border-radius:50%;background:radial-gradient(circle,rgba(123,110,246,.1) 0%,transparent 70%);pointer-events:none}
+        .pro .lbl{color:var(--orange)}
+        .pro .ttl{color:white}
+        .pro .sub{color:rgba(255,255,255,.55)}
+        .pro-inner{max-width:860px;margin:0 auto;position:relative;z-index:2}
+        .compare{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+        .compare-col{border-radius:24px;padding:36px 32px}
+        .compare-col.free{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1)}
+        .compare-col.hot{background:var(--orange);border:1px solid var(--orange)}
+        .compare-col h3{font-size:22px;font-weight:900;color:white;margin-bottom:28px;display:flex;align-items:center;gap:8px}
+        .compare-col h3 .star{font-size:18px}
+        .compare-list{list-style:none;display:flex;flex-direction:column;gap:13px;margin-bottom:32px}
+        .compare-list li{display:flex;align-items:flex-start;gap:10px;font-size:15px;line-height:1.45}
+        .compare-list li .ico{width:20px;height:20px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0;margin-top:1px}
+        .free .ico-yes{background:rgba(76,175,80,.25);color:#6EE06E}
+        .free .ico-no{background:rgba(255,255,255,.1);color:rgba(255,255,255,.35)}
+        .free li{color:rgba(255,255,255,.7)}
+        .free li.dim{color:rgba(255,255,255,.35)}
+        .hot .ico-yes{background:rgba(255,255,255,.25);color:white}
+        .hot li{color:white}
+        .btn-white{display:block;text-align:center;background:white;color:var(--navy);padding:14px;border-radius:50px;font-size:15px;font-weight:700;text-decoration:none;transition:opacity .2s}
+        .btn-white:hover{opacity:.88}
+        .pro-perks{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:52px}
+        .perk{text-align:center;padding:20px 12px}
+        .perk-icon{font-size:32px;margin-bottom:12px}
+        .perk h4{font-size:15px;font-weight:700;color:white;margin-bottom:6px}
+        .perk p{font-size:13px;color:rgba(255,255,255,.45);line-height:1.5}
 
-        /* ── FOOTER ── */
-        footer {
-            background: var(--navy);
-            padding: 48px 48px;
-            display: flex; justify-content: space-between; align-items: center;
-            flex-wrap: wrap; gap: 20px;
-        }
-        .foot-logo { font-size: 20px; font-weight: 800; color: white; }
-        .foot-logo span { color: var(--orange); }
-        .foot-links { display: flex; gap: 24px; list-style: none; flex-wrap: wrap; }
-        .foot-links a { color: rgba(255,255,255,.45); text-decoration: none; font-size: 14px; transition: color .2s; }
-        .foot-links a:hover { color: white; }
-        .foot-copy { font-size: 13px; color: rgba(255,255,255,.35); }
+        /* LANGUAGES */
+        .langs{padding:80px 40px;background:var(--bg);text-align:center}
+        .lang-pills{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin-top:32px}
+        .pill{background:white;border:1px solid var(--border);padding:11px 24px;border-radius:50px;font-size:15px;font-weight:600;display:flex;align-items:center;gap:8px}
 
-        /* ── RESPONSIVE ── */
-        @media (max-width: 960px) {
-            .hero { flex-direction: column; padding: 100px 28px 64px; text-align: center; }
-            .hero h1 { font-size: 52px; letter-spacing: -2px; }
-            .hero-sub { max-width: 100%; }
-            .hero-btns, .hero-stats { justify-content: center; }
-            .hero-phones { margin-top: 48px; }
-            .phone-back { display: none; }
-            .row, .row.rev { flex-direction: column; gap: 40px; }
-            .row-phones { gap: 12px; }
-            .ph { height: 380px; }
-            .ph.tall { height: 420px; }
-            .pricing-grid { grid-template-columns: 1fr; max-width: 380px; margin: 0 auto; }
-            .pro-perks { grid-template-columns: 1fr; }
-            nav { padding: 16px 24px; }
-            .nav-links { display: none; }
-            .hamburger { display: flex; }
-            .features, .showcase, .pro, .langs, .dl-cta { padding-left: 24px; padding-right: 24px; }
-            footer { flex-direction: column; text-align: center; }
-            .foot-links { justify-content: center; }
-        }
-        @media (max-width: 480px) {
-            .hero h1 { font-size: 40px; }
-            .ttl { font-size: 32px; }
-            .row-content h2 { font-size: 30px; }
-            .dl-cta h2 { font-size: 36px; }
-            .phone-wrap img { height: 440px; }
-            .ph { height: 320px; }
-            .ph.tall { height: 350px; }
-        }
+        /* DOWNLOAD */
+        .dl-cta{padding:104px 40px;background:white;text-align:center}
+        .dl-cta h2{font-size:54px;font-weight:900;letter-spacing:-2px;margin-bottom:16px}
+        .dl-cta p{font-size:18px;color:var(--muted);margin-bottom:44px}
+        .store-btn{display:inline-flex;align-items:center;gap:16px;background:var(--navy);color:white;padding:18px 40px;border-radius:20px;text-decoration:none;transition:transform .2s,opacity .2s}
+        .store-btn:hover{transform:translateY(-3px);opacity:.92}
+        .store-btn svg{width:36px;height:36px;flex-shrink:0}
+        .store-txt small{display:block;font-size:11px;opacity:.6;text-transform:uppercase;letter-spacing:.5px}
+        .store-txt strong{display:block;font-size:22px;font-weight:700}
 
-        /* mobile nav drawer */
-        .mobile-nav {
-            display: none;
-            flex-direction: column;
-            gap: 4px;
-            position: fixed;
-            top: 64px; left: 0; right: 0;
-            background: rgba(26,31,58,.98);
-            backdrop-filter: blur(12px);
-            padding: 16px 24px 24px;
-            z-index: 99;
-            border-bottom: 1px solid rgba(255,255,255,.08);
+        /* FOOTER */
+        footer{background:var(--navy);padding:44px 40px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+        .foot-logo{font-size:20px;font-weight:800;color:white}
+        .foot-logo span{color:var(--orange)}
+        .foot-links{display:flex;gap:20px;list-style:none;flex-wrap:wrap}
+        .foot-links a{color:rgba(255,255,255,.45);text-decoration:none;font-size:14px;transition:color .2s}
+        .foot-links a:hover{color:white}
+        .foot-copy{font-size:13px;color:rgba(255,255,255,.3)}
+
+        /* RESPONSIVE */
+        @media(max-width:960px){
+            .hero{flex-direction:column;padding:100px 24px 64px;text-align:center}
+            .hero h1{font-size:50px;letter-spacing:-2px}
+            .hero-sub{max-width:100%}
+            .hero-btns,.hero-stats{justify-content:center}
+            .hero-phones{margin-top:40px}
+            .phone-back{display:none}
+            .row,.row.rev{flex-direction:column;gap:40px}
+            .row-phones{gap:12px}
+            .ph{height:360px} .ph.tall{height:400px}
+            .compare{grid-template-columns:1fr;max-width:400px;margin:0 auto}
+            .pro-perks{grid-template-columns:1fr}
+            nav{padding:14px 20px}
+            .nav-links{display:none}
+            .hamburger{display:flex}
+            .features,.showcase,.pro,.langs,.dl-cta{padding-left:20px;padding-right:20px}
+            footer{flex-direction:column;text-align:center;padding:36px 20px}
+            .foot-links{justify-content:center}
         }
-        .mobile-nav.open { display: flex; }
-        .mobile-nav a {
-            color: rgba(255,255,255,.75);
-            text-decoration: none;
-            font-size: 17px;
-            font-weight: 600;
-            padding: 12px 8px;
-            border-bottom: 1px solid rgba(255,255,255,.06);
-            transition: color .2s;
+        @media(max-width:480px){
+            .hero h1{font-size:38px}
+            .ttl{font-size:30px}
+            .row-content h2{font-size:28px}
+            .dl-cta h2{font-size:34px}
+            .phone-wrap img{height:440px}
+            .ph{height:300px} .ph.tall{height:330px}
         }
-        .mobile-nav a:last-child { border-bottom: none; }
-        .mobile-nav a:hover { color: white; }
     </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
     <a href="#" class="nav-logo">Foodia<span>.</span></a>
     <ul class="nav-links">
-        <li><a href="#features">Features</a></li>
-        <li><a href="#ai">AI Analysis</a></li>
-        <li><a href="#progress">Progress</a></li>
-        <li><a href="#pricing">Pro</a></li>
-        <li><a href="#download" class="nav-cta">Download Free</a></li>
+        <li><a href="#features" data-i18n="nav.features">Features</a></li>
+        <li><a href="#ai" data-i18n="nav.ai">AI Analysis</a></li>
+        <li><a href="#progress" data-i18n="nav.progress">Progress</a></li>
+        <li><a href="#pricing" data-i18n="nav.pro">Pro</a></li>
+        <li><a href="https://apps.apple.com/us/app/foodia/id6770884779" target="_blank" rel="noopener" class="nav-cta" data-i18n="nav.download">Download Free</a></li>
     </ul>
-    <button class="hamburger" id="ham" aria-label="Menu">
-        <span></span><span></span><span></span>
-    </button>
+    <div class="nav-right">
+        <div class="lang-drop" id="langDrop">
+            <button class="lang-trigger" id="langTrigger">🌐 <span id="langLabel">EN</span> ▾</button>
+            <div class="lang-menu" id="langMenu">
+                <button data-lang="en" class="active">🇬🇧 English</button>
+                <button data-lang="es">🇪🇸 Español</button>
+                <button data-lang="fr">🇫🇷 Français</button>
+                <button data-lang="de">🇩🇪 Deutsch</button>
+                <button data-lang="it">🇮🇹 Italiano</button>
+                <button data-lang="pt">🇵🇹 Português</button>
+            </div>
+        </div>
+        <button class="hamburger" id="ham"><span></span><span></span><span></span></button>
+    </div>
 </nav>
+
 <div class="mobile-nav" id="mobNav">
-    <a href="#features" onclick="closeNav()">Features</a>
-    <a href="#ai" onclick="closeNav()">AI Analysis</a>
-    <a href="#progress" onclick="closeNav()">Progress</a>
-    <a href="#pricing" onclick="closeNav()">Pro & Pricing</a>
-    <a href="#download" onclick="closeNav()">Download Free</a>
+    <a href="#features" data-i18n="nav.features" onclick="closeNav()">Features</a>
+    <a href="#ai" data-i18n="nav.ai" onclick="closeNav()">AI Analysis</a>
+    <a href="#progress" data-i18n="nav.progress" onclick="closeNav()">Progress</a>
+    <a href="#pricing" data-i18n="nav.pro" onclick="closeNav()">Pro</a>
+    <a href="https://apps.apple.com/us/app/foodia/id6770884779" target="_blank" rel="noopener" data-i18n="nav.download" onclick="closeNav()">Download Free</a>
+    <div class="mobile-lang">
+        <button data-lang="en" class="active" onclick="setLang('en');closeNav()">🇬🇧 EN</button>
+        <button data-lang="es" onclick="setLang('es');closeNav()">🇪🇸 ES</button>
+        <button data-lang="fr" onclick="setLang('fr');closeNav()">🇫🇷 FR</button>
+        <button data-lang="de" onclick="setLang('de');closeNav()">🇩🇪 DE</button>
+        <button data-lang="it" onclick="setLang('it');closeNav()">🇮🇹 IT</button>
+        <button data-lang="pt" onclick="setLang('pt');closeNav()">🇵🇹 PT</button>
+    </div>
 </div>
 
 <!-- HERO -->
 <section class="hero">
     <div class="hero-content">
-        <div class="hero-badge">✨ Powered by AI</div>
-        <h1>Eat smart.<br>Live <span>better.</span></h1>
-        <p class="hero-sub">Foodia tracks your nutrition, exercise, and daily progress with AI — just take a photo of your meal and let the magic happen.</p>
+        <div class="hero-badge" data-i18n="hero.badge">✨ Powered by AI</div>
+        <h1><span data-i18n="hero.h1a">Eat smart.</span><br><span data-i18n="hero.h1b">Live</span> <span data-i18n="hero.h1c" style="color:var(--orange)">better.</span></h1>
+        <p class="hero-sub" data-i18n="hero.sub">Foodia tracks your nutrition, exercise, and daily progress with AI — just take a photo of your meal and let the magic happen.</p>
         <div class="hero-btns">
-            <a href="#download" class="btn-primary">
+            <a href="https://apps.apple.com/us/app/foodia/id6770884779" target="_blank" rel="noopener" class="btn-primary">
                 <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-                Download Free
+                <span data-i18n="nav.download">Download Free</span>
             </a>
-            <a href="#features" class="btn-ghost">See Features</a>
+            <a href="#features" class="btn-ghost" data-i18n="hero.btn2">See Features</a>
         </div>
         <div class="hero-stats">
-            <div>
-                <span class="stat-val">6<em>+</em></span>
-                <span class="stat-lbl">Languages</span>
-            </div>
-            <div>
-                <span class="stat-val">AI<em>★</em></span>
-                <span class="stat-lbl">Powered</span>
-            </div>
-            <div>
-                <span class="stat-val">Free<em>*</em></span>
-                <span class="stat-lbl">To start</span>
-            </div>
+            <div><span class="stat-val">6<em>+</em></span><span class="stat-lbl" data-i18n="hero.stat1">Languages</span></div>
+            <div><span class="stat-val">AI<em>★</em></span><span class="stat-lbl" data-i18n="hero.stat2">Powered</span></div>
+            <div><span class="stat-val">Free<em>*</em></span><span class="stat-lbl" data-i18n="hero.stat3">To start</span></div>
         </div>
     </div>
     <div class="hero-phones">
         <div class="phone-wrap">
-            <img src="Capturas/IMG_1967.jpeg" alt="Foodia dashboard showing daily summary and calorie tracking">
-            <div class="phone-back">
-                <img src="Capturas/IMG_1969.jpeg" alt="Foodia AI food analysis">
-            </div>
+            <img src="Capturas/IMG_1967.jpeg" alt="Foodia dashboard">
+            <div class="phone-back"><img src="Capturas/IMG_1969.jpeg" alt="Foodia AI analysis"></div>
         </div>
     </div>
 </section>
 
 <!-- FEATURES -->
 <section class="features" id="features">
-    <div class="lbl">Everything you need</div>
-    <h2 class="ttl">Your complete nutrition companion</h2>
-    <p class="sub">Five powerful sections to track every aspect of your health — from your morning coffee to your evening workout.</p>
+    <div class="lbl" data-i18n="feat.lbl">Everything you need</div>
+    <h2 class="ttl" data-i18n="feat.ttl">Your complete nutrition companion</h2>
+    <p class="sub" data-i18n="feat.sub">Five powerful sections to track every aspect of your health — from your morning coffee to your evening workout.</p>
     <div class="cards">
-        <div class="card">
-            <div class="card-icon ic-or">🏠</div>
-            <h3>Daily Dashboard</h3>
-            <p>Calorie summary, macro breakdown, water intake, and 15/30-day trends — all at a glance every morning.</p>
-        </div>
-        <div class="card">
-            <div class="card-icon ic-pu">📷</div>
-            <h3>AI Food Analysis</h3>
-            <p>Snap a photo, describe your meal, or scan a barcode. AI detects the dish and calculates full nutrition in seconds.</p>
-        </div>
-        <div class="card">
-            <div class="card-icon ic-gr">⚡</div>
-            <h3>Exercise Tracking</h3>
-            <p>Describe your workout in plain text and AI extracts each exercise, sets, reps, and calories burned automatically.</p>
-        </div>
-        <div class="card">
-            <div class="card-icon ic-bl">📅</div>
-            <h3>Progress Calendar</h3>
-            <p>Navigate any past day to review or edit your food and workout log. Your full history, always accessible.</p>
-        </div>
-        <div class="card">
-            <div class="card-icon ic-or">👤</div>
-            <h3>Nutritional Profile</h3>
-            <p>Set your goals, track BMR/TDEE, manage allergies, and export your full nutritional history as a PDF.</p>
-        </div>
-        <div class="card">
-            <div class="card-icon ic-pu">💬</div>
-            <h3>AI Nutritionist Chat</h3>
-            <p>Ask your personal AI nutritionist anything about your diet, macros, or health goals — 24/7, in any language.</p>
-        </div>
+        <div class="card"><div class="card-icon ic-or">🏠</div><h3 data-i18n="card1.ttl">Daily Dashboard</h3><p data-i18n="card1.p">Calorie summary, macro breakdown, water intake, and 15/30-day trends — all at a glance every morning.</p></div>
+        <div class="card"><div class="card-icon ic-pu">📷</div><h3 data-i18n="card2.ttl">AI Food Analysis</h3><p data-i18n="card2.p">Snap a photo, describe your meal, or scan a barcode. AI detects the dish and calculates full nutrition in seconds.</p></div>
+        <div class="card"><div class="card-icon ic-gr">⚡</div><h3 data-i18n="card3.ttl">Exercise Tracking</h3><p data-i18n="card3.p">Describe your workout in plain text and AI extracts each exercise, sets, reps, and calories burned automatically.</p></div>
+        <div class="card"><div class="card-icon ic-bl">📅</div><h3 data-i18n="card4.ttl">Progress Calendar</h3><p data-i18n="card4.p">Navigate any past day to review or edit your food and workout log. Your full history, always accessible.</p></div>
+        <div class="card"><div class="card-icon ic-or">👤</div><h3 data-i18n="card5.ttl">Nutritional Profile</h3><p data-i18n="card5.p">Set your goals, track BMR/TDEE, manage allergies, and export your full nutritional history as a PDF.</p></div>
+        <div class="card"><div class="card-icon ic-pu">💬</div><h3 data-i18n="card6.ttl">AI Nutritionist Chat</h3><p data-i18n="card6.p">Ask your personal AI nutritionist anything about your diet, macros, or health goals — 24/7, in any language.</p></div>
     </div>
 </section>
 
-<!-- SHOWCASE: AI Food Analysis -->
+<!-- SHOWCASE: AI -->
 <section class="showcase" id="ai">
     <div class="row">
         <div class="row-content">
-            <div class="row-tag">📷 AI Analysis</div>
-            <h2>Take a photo.<br>Know everything.</h2>
-            <p>Point your camera at any meal and Foodia's AI instantly identifies the dish, detects visible ingredients, estimates the full recipe, and delivers a complete nutritional breakdown — calories, macros, micros, and NutriScore rating.</p>
+            <div class="row-tag" data-i18n="ai.tag">📷 AI Analysis</div>
+            <h2><span data-i18n="ai.h2a">Take a photo.</span><br><span data-i18n="ai.h2b">Know everything.</span></h2>
+            <p data-i18n="ai.p">Point your camera at any meal and Foodia's AI instantly identifies the dish, detects visible ingredients, estimates the full recipe, and delivers a complete nutritional breakdown — calories, macros, micros, and NutriScore rating.</p>
             <ul class="check-list">
-                <li>Photo, text, or barcode scanner input</li>
-                <li>Automatic dish detection with confidence score</li>
-                <li>Full macro & micro nutrient breakdown</li>
-                <li>NutriScore quality rating from A to E</li>
-                <li>Editable entries — correct before saving</li>
+                <li data-i18n="ai.f1">Photo, text, or barcode scanner input</li>
+                <li data-i18n="ai.f2">Automatic dish detection with confidence score</li>
+                <li data-i18n="ai.f3">Full macro & micro nutrient breakdown</li>
+                <li data-i18n="ai.f4">NutriScore quality rating from A to E</li>
+                <li data-i18n="ai.f5">Editable entries — correct before saving</li>
             </ul>
         </div>
         <div class="row-phones">
-            <img class="ph" src="Capturas/IMG_1969.jpeg" alt="Foodia analyzing a Fideuà with Seafood dish">
-            <img class="ph" src="Capturas/IMG_1970.jpeg" alt="Nutrition facts breakdown after AI analysis">
+            <img class="ph" src="Capturas/IMG_1969.jpeg" alt="Foodia AI food analysis">
+            <img class="ph" src="Capturas/IMG_1970.jpeg" alt="Nutrition facts breakdown">
         </div>
     </div>
 </section>
@@ -696,19 +298,19 @@
 <section class="showcase alt">
     <div class="row rev">
         <div class="row-content">
-            <div class="row-tag or">⚡ Exercise AI</div>
-            <h2>Log workouts<br>in plain English.</h2>
-            <p>No more tedious manual logging. Just describe your session the way you'd tell a friend — "4 sets bench press 80 kg × 10, 30 min running" — and Foodia's AI parses each exercise individually and calculates calories burned using MET values.</p>
+            <div class="row-tag or" data-i18n="ex.tag">⚡ Exercise AI</div>
+            <h2><span data-i18n="ex.h2a">Log workouts</span><br><span data-i18n="ex.h2b">in plain English.</span></h2>
+            <p data-i18n="ex.p">No more tedious manual logging. Just describe your session the way you'd tell a friend — "4 sets bench press 80 kg × 10, 30 min running" — and Foodia's AI parses each exercise and calculates calories burned using MET values.</p>
             <ul class="check-list">
-                <li>Natural language workout input</li>
-                <li>Detects each exercise separately</li>
-                <li>Calorie burn via MET × bodyweight</li>
-                <li>Review and remove incorrect entries</li>
-                <li>Full exercise history with editable names</li>
+                <li data-i18n="ex.f1">Natural language workout input</li>
+                <li data-i18n="ex.f2">Detects each exercise separately</li>
+                <li data-i18n="ex.f3">Calorie burn via MET × bodyweight</li>
+                <li data-i18n="ex.f4">Review and remove incorrect entries</li>
+                <li data-i18n="ex.f5">Full exercise history with editable names</li>
             </ul>
         </div>
         <div class="row-phones">
-            <img class="ph tall" src="Capturas/IMG_1971.jpeg" alt="Foodia exercise tracking with AI detection">
+            <img class="ph tall" src="Capturas/IMG_1971.jpeg" alt="Exercise tracking with AI">
         </div>
     </div>
 </section>
@@ -717,105 +319,83 @@
 <section class="showcase" id="progress">
     <div class="row">
         <div class="row-content">
-            <div class="row-tag gr">📅 Progress</div>
-            <h2>See every day.<br>Track every trend.</h2>
-            <p>The progress calendar gives you a complete picture of your nutritional journey. Tap any day to see consumed vs burned calories, your balance, and the full list of meals and workouts — with the ability to edit anything, anytime.</p>
+            <div class="row-tag gr" data-i18n="prog.tag">📅 Progress</div>
+            <h2><span data-i18n="prog.h2a">See every day.</span><br><span data-i18n="prog.h2b">Track every trend.</span></h2>
+            <p data-i18n="prog.p">The progress calendar gives you a complete picture of your nutritional journey. Tap any day to see consumed vs burned calories, your balance, and the full list of meals and workouts — with the ability to edit anything, anytime.</p>
             <ul class="check-list">
-                <li>Monthly calendar with logged-day indicators</li>
-                <li>Consumed, burned & balance summary</li>
-                <li>Detailed macro breakdown per day</li>
-                <li>Full meal and exercise log per day</li>
-                <li>Edit or add entries for any past day</li>
+                <li data-i18n="prog.f1">Monthly calendar with logged-day indicators</li>
+                <li data-i18n="prog.f2">Consumed, burned & balance summary</li>
+                <li data-i18n="prog.f3">Detailed macro breakdown per day</li>
+                <li data-i18n="prog.f4">Full meal and exercise log per day</li>
+                <li data-i18n="prog.f5">Edit or add entries for any past day</li>
             </ul>
         </div>
         <div class="row-phones">
-            <img class="ph" src="Capturas/IMG_1972.jpeg" alt="Progress calendar view">
-            <img class="ph" src="Capturas/IMG_1973.jpeg" alt="Daily meals and exercise detail">
+            <img class="ph" src="Capturas/IMG_1972.jpeg" alt="Progress calendar">
+            <img class="ph" src="Capturas/IMG_1973.jpeg" alt="Daily detail">
         </div>
     </div>
 </section>
 
-<!-- PRO PRICING -->
+<!-- PRO — Free vs Pro comparison -->
 <section class="pro" id="pricing">
     <div class="pro-inner">
-        <div class="lbl">Foodia Pro</div>
-        <h2 class="ttl">No limits. Unlimited analysis.</h2>
-        <p class="sub">Start free with 3 AI uses per day. Upgrade to Pro for unlimited everything.</p>
-        <div class="pricing-grid">
-            <div class="price-card">
-                <div class="price-plan">Monthly</div>
-                <div class="price-amount">$5.99</div>
-                <div class="price-period">per month · cancel anytime</div>
-                <ul class="price-list">
-                    <li>Unlimited food analysis</li>
-                    <li>Unlimited exercise tracking</li>
-                    <li>Unlimited AI nutritionist chat</li>
-                    <li>Unlimited characters</li>
-                    <li>Export to PDF with images</li>
-                    <li>No ads</li>
+        <div class="lbl" data-i18n="pro.lbl">Foodia Pro</div>
+        <h2 class="ttl" data-i18n="pro.ttl">Free vs Pro</h2>
+        <p class="sub" data-i18n="pro.sub">Start for free. Upgrade when you need more.</p>
+        <div class="compare">
+            <!-- FREE -->
+            <div class="compare-col free">
+                <h3 data-i18n="free.col.ttl">Free</h3>
+                <ul class="compare-list">
+                    <li><span class="ico ico-yes">✓</span><span data-i18n="free.f1">3 AI food analyses / day</span></li>
+                    <li><span class="ico ico-yes">✓</span><span data-i18n="free.f2">3 AI chat messages / day</span></li>
+                    <li><span class="ico ico-yes">✓</span><span data-i18n="free.f3">200 character limit</span></li>
+                    <li><span class="ico ico-yes">✓</span><span data-i18n="free.f4">Core tracking features</span></li>
+                    <li class="dim"><span class="ico ico-no">✕</span><span data-i18n="free.f5">Includes ads</span></li>
+                    <li class="dim"><span class="ico ico-no">✕</span><span data-i18n="free.f6">No PDF export</span></li>
                 </ul>
-                <a href="#download" class="btn-outline-w">Get Monthly</a>
             </div>
-            <div class="price-card hot">
-                <div class="hot-badge">Best Value — Save 17%</div>
-                <div class="price-plan">Annual</div>
-                <div class="price-amount">$59.99</div>
-                <div class="price-period">per year · only $5.00/month</div>
-                <ul class="price-list">
-                    <li>Unlimited food analysis</li>
-                    <li>Unlimited exercise tracking</li>
-                    <li>Unlimited AI nutritionist chat</li>
-                    <li>Unlimited characters</li>
-                    <li>Export to PDF with images</li>
-                    <li>No ads</li>
+            <!-- PRO -->
+            <div class="compare-col hot">
+                <h3><span data-i18n="pro.col.ttl">Pro</span> <span class="star">★</span></h3>
+                <ul class="compare-list">
+                    <li><span class="ico ico-yes">✓</span><span data-i18n="pro.col.f1">Unlimited food analysis</span></li>
+                    <li><span class="ico ico-yes">✓</span><span data-i18n="pro.col.f2">Unlimited exercise tracking</span></li>
+                    <li><span class="ico ico-yes">✓</span><span data-i18n="pro.col.f3">Unlimited AI chat</span></li>
+                    <li><span class="ico ico-yes">✓</span><span data-i18n="pro.col.f4">Unlimited characters</span></li>
+                    <li><span class="ico ico-yes">✓</span><span data-i18n="pro.col.f5">Export to PDF with images</span></li>
+                    <li><span class="ico ico-yes">✓</span><span data-i18n="pro.col.f6">No ads</span></li>
                 </ul>
-                <a href="#download" class="btn-white">Get Annual</a>
+                <a href="https://apps.apple.com/us/app/foodia/id6770884779" target="_blank" rel="noopener" class="btn-white" data-i18n="pro.btn">Get Foodia Pro</a>
             </div>
         </div>
         <div class="pro-perks">
-            <div class="perk">
-                <div class="perk-icon">📷</div>
-                <h4>Unlimited Analysis</h4>
-                <p>Scan and analyze as many meals as you want, every single day, without limits.</p>
-            </div>
-            <div class="perk">
-                <div class="perk-icon">🤖</div>
-                <h4>AI Nutritionist</h4>
-                <p>Chat without limits with your personal AI nutritionist about your diet and goals.</p>
-            </div>
-            <div class="perk">
-                <div class="perk-icon">📄</div>
-                <h4>PDF Export</h4>
-                <p>Download your complete nutritional history with meal photos included.</p>
-            </div>
+            <div class="perk"><div class="perk-icon">📷</div><h4 data-i18n="perk1.ttl">Unlimited Analysis</h4><p data-i18n="perk1.p">Scan and analyze as many meals as you want, every single day.</p></div>
+            <div class="perk"><div class="perk-icon">🤖</div><h4 data-i18n="perk2.ttl">AI Nutritionist</h4><p data-i18n="perk2.p">Chat without limits with your personal AI nutritionist.</p></div>
+            <div class="perk"><div class="perk-icon">📄</div><h4 data-i18n="perk3.ttl">PDF Export</h4><p data-i18n="perk3.p">Download your complete nutritional history with images included.</p></div>
         </div>
     </div>
 </section>
 
 <!-- LANGUAGES -->
 <section class="langs">
-    <div class="lbl">Multilingual</div>
-    <h2 class="ttl" style="margin-bottom:0">Available in 6 languages</h2>
+    <div class="lbl" data-i18n="lang.lbl">Multilingual</div>
+    <h2 class="ttl" style="margin-bottom:0" data-i18n="lang.ttl">Available in 6 languages</h2>
     <div class="lang-pills">
-        <div class="pill">🇬🇧 English</div>
-        <div class="pill">🇪🇸 Español</div>
-        <div class="pill">🇫🇷 Français</div>
-        <div class="pill">🇩🇪 Deutsch</div>
-        <div class="pill">🇮🇹 Italiano</div>
-        <div class="pill">🇵🇹 Português</div>
+        <div class="pill">🇬🇧 English</div><div class="pill">🇪🇸 Español</div>
+        <div class="pill">🇫🇷 Français</div><div class="pill">🇩🇪 Deutsch</div>
+        <div class="pill">🇮🇹 Italiano</div><div class="pill">🇵🇹 Português</div>
     </div>
 </section>
 
-<!-- DOWNLOAD CTA -->
+<!-- DOWNLOAD -->
 <section class="dl-cta" id="download">
-    <h2>Ready to eat smarter?</h2>
-    <p>Download Foodia for free on the App Store.</p>
-    <a href="#" class="store-btn">
+    <h2 data-i18n="dl.h2">Ready to eat smarter?</h2>
+    <p data-i18n="dl.p">Download Foodia for free on the App Store.</p>
+    <a href="https://apps.apple.com/us/app/foodia/id6770884779" target="_blank" rel="noopener" class="store-btn">
         <svg viewBox="0 0 24 24" fill="white"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
-        <span class="store-txt">
-            <small>Download on the</small>
-            <strong>App Store</strong>
-        </span>
+        <span class="store-txt"><small data-i18n="dl.small">Download on the</small><strong data-i18n="dl.strong">App Store</strong></span>
     </a>
 </section>
 
@@ -823,22 +403,282 @@
 <footer>
     <div class="foot-logo">Foodia<span>.</span></div>
     <ul class="foot-links">
-        <li><a href="#features">Features</a></li>
-        <li><a href="#pricing">Pricing</a></li>
-        <li><a href="privacy.html">Privacy Policy</a></li>
-        <li><a href="terms.html">Terms of Use</a></li>
+        <li><a href="index.html" data-i18n="foot.home">Home</a></li>
+        <li><a href="privacy.html" data-i18n="foot.privacy">Privacy Policy</a></li>
+        <li><a href="terms.html" data-i18n="foot.terms">Terms of Use</a></li>
+        <li><a href="support.html" data-i18n="foot.support">Support</a></li>
     </ul>
-    <div class="foot-copy">© 2026 Foodia. All rights reserved.</div>
+    <div class="foot-copy" data-i18n="foot.copy">© 2026 Foodia. All rights reserved.</div>
 </footer>
 
 <script>
-    const ham = document.getElementById('ham');
-    const mob = document.getElementById('mobNav');
-    ham.addEventListener('click', () => mob.classList.toggle('open'));
-    function closeNav() { mob.classList.remove('open'); }
-    document.querySelectorAll('a[href^="#"]').forEach(a => {
-        a.addEventListener('click', () => mob.classList.remove('open'));
+const T = {
+  en:{
+    'nav.features':'Features','nav.ai':'AI Analysis','nav.progress':'Progress','nav.pro':'Pro','nav.download':'Download Free',
+    'hero.badge':'✨ Powered by AI','hero.h1a':'Eat smart.','hero.h1b':'Live','hero.h1c':'better.',
+    'hero.sub':"Foodia tracks your nutrition, exercise, and daily progress with AI — just take a photo of your meal and let the magic happen.",
+    'hero.btn2':'See Features','hero.stat1':'Languages','hero.stat2':'Powered','hero.stat3':'To start',
+    'feat.lbl':'Everything you need','feat.ttl':'Your complete nutrition companion',
+    'feat.sub':'Five powerful sections to track every aspect of your health — from your morning coffee to your evening workout.',
+    'card1.ttl':'Daily Dashboard','card1.p':'Calorie summary, macro breakdown, water intake, and 15/30-day trends — all at a glance every morning.',
+    'card2.ttl':'AI Food Analysis','card2.p':'Snap a photo, describe your meal, or scan a barcode. AI detects the dish and calculates full nutrition in seconds.',
+    'card3.ttl':'Exercise Tracking','card3.p':'Describe your workout in plain text and AI extracts each exercise, sets, reps, and calories burned automatically.',
+    'card4.ttl':'Progress Calendar','card4.p':'Navigate any past day to review or edit your food and workout log. Your full history, always accessible.',
+    'card5.ttl':'Nutritional Profile','card5.p':'Set your goals, track BMR/TDEE, manage allergies, and export your full nutritional history as a PDF.',
+    'card6.ttl':'AI Nutritionist Chat','card6.p':'Ask your personal AI nutritionist anything about your diet, macros, or health goals — 24/7, in any language.',
+    'ai.tag':'📷 AI Analysis','ai.h2a':'Take a photo.','ai.h2b':'Know everything.',
+    'ai.p':"Point your camera at any meal and Foodia's AI instantly identifies the dish, detects visible ingredients, estimates the full recipe, and delivers a complete nutritional breakdown — calories, macros, micros, and NutriScore rating.",
+    'ai.f1':'Photo, text, or barcode scanner input','ai.f2':'Automatic dish detection with confidence score',
+    'ai.f3':'Full macro & micro nutrient breakdown','ai.f4':'NutriScore quality rating from A to E','ai.f5':'Editable entries — correct before saving',
+    'ex.tag':'⚡ Exercise AI','ex.h2a':'Log workouts','ex.h2b':'in plain English.',
+    'ex.p':"No more tedious manual logging. Just describe your session the way you'd tell a friend — \"4 sets bench press 80 kg × 10, 30 min running\" — and Foodia's AI parses each exercise and calculates calories burned using MET values.",
+    'ex.f1':'Natural language workout input','ex.f2':'Detects each exercise separately','ex.f3':'Calorie burn via MET × bodyweight',
+    'ex.f4':'Review and remove incorrect entries','ex.f5':'Full exercise history with editable names',
+    'prog.tag':'📅 Progress','prog.h2a':'See every day.','prog.h2b':'Track every trend.',
+    'prog.p':"The progress calendar gives you a complete picture of your nutritional journey. Tap any day to see consumed vs burned calories, your balance, and the full list of meals and workouts — with the ability to edit anything, anytime.",
+    'prog.f1':'Monthly calendar with logged-day indicators','prog.f2':'Consumed, burned & balance summary',
+    'prog.f3':'Detailed macro breakdown per day','prog.f4':'Full meal and exercise log per day','prog.f5':'Edit or add entries for any past day',
+    'pro.lbl':'Foodia Pro','pro.ttl':'Free vs Pro','pro.sub':'Start for free. Upgrade when you need more.',
+    'free.col.ttl':'Free','free.f1':'3 AI food analyses / day','free.f2':'3 AI chat messages / day',
+    'free.f3':'200 character limit','free.f4':'Core tracking features','free.f5':'Includes ads','free.f6':'No PDF export',
+    'pro.col.ttl':'Pro','pro.col.f1':'Unlimited food analysis','pro.col.f2':'Unlimited exercise tracking',
+    'pro.col.f3':'Unlimited AI chat','pro.col.f4':'Unlimited characters','pro.col.f5':'Export to PDF with images','pro.col.f6':'No ads',
+    'pro.btn':'Get Foodia Pro',
+    'perk1.ttl':'Unlimited Analysis','perk1.p':'Scan and analyze as many meals as you want, every single day.',
+    'perk2.ttl':'AI Nutritionist','perk2.p':'Chat without limits with your personal AI nutritionist.',
+    'perk3.ttl':'PDF Export','perk3.p':'Download your complete nutritional history with images included.',
+    'lang.lbl':'Multilingual','lang.ttl':'Available in 6 languages',
+    'dl.h2':'Ready to eat smarter?','dl.p':'Download Foodia for free on the App Store.','dl.small':'Download on the','dl.strong':'App Store',
+    'foot.home':'Home','foot.privacy':'Privacy Policy','foot.terms':'Terms of Use','foot.support':'Support',
+    'foot.copy':'© 2026 Foodia. All rights reserved.'
+  },
+  es:{
+    'nav.features':'Funciones','nav.ai':'Análisis IA','nav.progress':'Progreso','nav.pro':'Pro','nav.download':'Descargar gratis',
+    'hero.badge':'✨ Con Inteligencia Artificial','hero.h1a':'Come mejor.','hero.h1b':'Vive','hero.h1c':'mejor.',
+    'hero.sub':'Foodia registra tu nutrición, ejercicio y progreso diario con IA — solo haz una foto a tu comida y deja que la magia ocurra.',
+    'hero.btn2':'Ver funciones','hero.stat1':'Idiomas','hero.stat2':'Con IA','hero.stat3':'Gratis',
+    'feat.lbl':'Todo lo que necesitas','feat.ttl':'Tu compañero nutricional completo',
+    'feat.sub':'Cinco secciones para controlar cada aspecto de tu salud — desde tu café de la mañana hasta tu entrenamiento de la tarde.',
+    'card1.ttl':'Panel diario','card1.p':'Resumen de calorías, macros, agua y tendencias de 15/30 días — todo de un vistazo cada mañana.',
+    'card2.ttl':'Análisis de comida con IA','card2.p':'Haz una foto, describe tu plato o escanea un código de barras. La IA detecta el plato y calcula toda la nutrición en segundos.',
+    'card3.ttl':'Registro de ejercicio','card3.p':'Describe tu entrenamiento en texto libre y la IA extrae cada ejercicio, series, repeticiones y calorías quemadas automáticamente.',
+    'card4.ttl':'Calendario de progreso','card4.p':'Navega cualquier día pasado para revisar o editar tu diario. Tu historial completo, siempre accesible.',
+    'card5.ttl':'Perfil nutricional','card5.p':'Establece tus objetivos, calcula tu TMB/TDEE, gestiona alergias y exporta tu historial nutricional completo en PDF.',
+    'card6.ttl':'Chat con nutricionista IA','card6.p':'Pregunta a tu nutricionista IA lo que quieras sobre tu dieta, macros u objetivos de salud — 24/7, en cualquier idioma.',
+    'ai.tag':'📷 Análisis IA','ai.h2a':'Haz una foto.','ai.h2b':'Sábelo todo.',
+    'ai.p':'Apunta tu cámara a cualquier plato y la IA de Foodia identifica el plato al instante, detecta ingredientes y ofrece un desglose nutricional completo — calorías, macros, micros y NutriScore.',
+    'ai.f1':'Entrada por foto, texto o escáner de código de barras','ai.f2':'Detección automática del plato con porcentaje de confianza',
+    'ai.f3':'Desglose completo de macros y micronutrientes','ai.f4':'NutriScore de A a E','ai.f5':'Entradas editables antes de guardar',
+    'ex.tag':'⚡ Ejercicio IA','ex.h2a':'Registra tus entrenos','ex.h2b':'en lenguaje natural.',
+    'ex.p':'Sin registros tediosos. Describe tu sesión como se la contarías a un amigo — "4 series de press banca 80 kg × 10, 30 min de carrera" — y la IA analiza cada ejercicio y calcula las calorías quemadas con valores MET.',
+    'ex.f1':'Entrada de entrenamiento en lenguaje natural','ex.f2':'Detecta cada ejercicio por separado','ex.f3':'Gasto calórico mediante MET × peso corporal',
+    'ex.f4':'Revisa y elimina entradas incorrectas','ex.f5':'Historial completo de ejercicios con nombres editables',
+    'prog.tag':'📅 Progreso','prog.h2a':'Ve cada día.','prog.h2b':'Sigue cada tendencia.',
+    'prog.p':'El calendario de progreso te da una imagen completa de tu viaje nutricional. Toca cualquier día para ver calorías consumidas vs quemadas, tu balance y el listado completo de comidas y entrenamientos.',
+    'prog.f1':'Calendario mensual con indicadores de días registrados','prog.f2':'Resumen de consumido, quemado y balance',
+    'prog.f3':'Desglose detallado de macros por día','prog.f4':'Registro completo de comidas y ejercicios por día','prog.f5':'Edita o añade entradas en cualquier día pasado',
+    'pro.lbl':'Foodia Pro','pro.ttl':'Gratis vs Pro','pro.sub':'Empieza gratis. Actualiza cuando necesites más.',
+    'free.col.ttl':'Gratis','free.f1':'3 análisis de comida con IA / día','free.f2':'3 mensajes de chat IA / día',
+    'free.f3':'Límite de 200 caracteres','free.f4':'Funciones principales de seguimiento','free.f5':'Incluye anuncios','free.f6':'Sin exportar PDF',
+    'pro.col.ttl':'Pro','pro.col.f1':'Análisis de comida ilimitados','pro.col.f2':'Registro de ejercicio ilimitado',
+    'pro.col.f3':'Chat con IA ilimitado','pro.col.f4':'Caracteres ilimitados','pro.col.f5':'Exportar a PDF con imágenes','pro.col.f6':'Sin anuncios',
+    'pro.btn':'Obtener Foodia Pro',
+    'perk1.ttl':'Análisis ilimitados','perk1.p':'Escanea y analiza todos los platos que quieras, cada día.',
+    'perk2.ttl':'Nutricionista IA','perk2.p':'Chatea sin límites con tu nutricionista IA personal.',
+    'perk3.ttl':'Exportar PDF','perk3.p':'Descarga tu historial nutricional completo con imágenes incluidas.',
+    'lang.lbl':'Multiidioma','lang.ttl':'Disponible en 6 idiomas',
+    'dl.h2':'¿Listo para comer mejor?','dl.p':'Descarga Foodia gratis en el App Store.','dl.small':'Disponible en','dl.strong':'App Store',
+    'foot.home':'Inicio','foot.privacy':'Política de privacidad','foot.terms':'Términos de uso','foot.support':'Soporte',
+    'foot.copy':'© 2026 Foodia. Todos los derechos reservados.'
+  },
+  fr:{
+    'nav.features':'Fonctions','nav.ai':'Analyse IA','nav.progress':'Progrès','nav.pro':'Pro','nav.download':'Télécharger',
+    'hero.badge':"✨ Propulsé par l'IA",'hero.h1a':'Mangez mieux.','hero.h1b':'Vivez','hero.h1c':'mieux.',
+    'hero.sub':"Foodia suit votre nutrition, votre exercice et vos progrès quotidiens avec l'IA — prenez simplement une photo de votre repas.",
+    'hero.btn2':'Voir les fonctions','hero.stat1':'Langues','hero.stat2':'Avec IA','hero.stat3':'Gratuit',
+    'feat.lbl':'Tout ce dont vous avez besoin','feat.ttl':'Votre compagnon nutritionnel complet',
+    'feat.sub':"Cinq sections puissantes pour suivre chaque aspect de votre santé — du café du matin à l'entraînement du soir.",
+    'card1.ttl':'Tableau de bord quotidien','card1.p':"Résumé calorique, macros, hydratation et tendances 15/30 jours — tout en un coup d'œil chaque matin.",
+    'card2.ttl':'Analyse alimentaire IA','card2.p':"Prenez une photo, décrivez votre repas ou scannez un code-barres. L'IA détecte le plat et calcule la nutrition complète en secondes.",
+    'card3.ttl':"Suivi de l'exercice",'card3.p':'Décrivez votre entraînement en texte libre et l\'IA extrait chaque exercice, séries, répétitions et calories brûlées automatiquement.',
+    'card4.ttl':'Calendrier de progrès','card4.p':"Naviguez n'importe quel jour passé pour revoir ou modifier votre journal. Votre historique complet, toujours accessible.",
+    'card5.ttl':'Profil nutritionnel','card5.p':'Fixez vos objectifs, calculez votre MB/TDEE, gérez les allergies et exportez votre historique nutritionnel en PDF.',
+    'card6.ttl':'Chat avec nutritionniste IA','card6.p':'Posez toutes vos questions à votre nutritionniste IA personnel sur votre régime, vos macros ou vos objectifs — 24/7.',
+    'ai.tag':'📷 Analyse IA','ai.h2a':'Prenez une photo.','ai.h2b':'Sachez tout.',
+    'ai.p':"Pointez votre caméra sur n'importe quel repas et l'IA de Foodia identifie instantanément le plat, détecte les ingrédients et fournit une analyse nutritionnelle complète — calories, macros, micros et NutriScore.",
+    'ai.f1':'Saisie par photo, texte ou scanner code-barres','ai.f2':'Détection automatique du plat avec score de confiance',
+    'ai.f3':'Décomposition complète des macros et micronutriments','ai.f4':'NutriScore de A à E','ai.f5':'Entrées modifiables avant enregistrement',
+    'ex.tag':'⚡ Exercice IA','ex.h2a':'Enregistrez vos séances','ex.h2b':'en langage naturel.',
+    'ex.p':"Décrivez simplement votre séance — \"4 séries développé couché 80 kg × 10, 30 min course\" — et l'IA analyse chaque exercice et calcule les calories brûlées.",
+    'ex.f1':'Saisie en langage naturel','ex.f2':'Détecte chaque exercice séparément','ex.f3':'Dépense calorique via MET × poids',
+    'ex.f4':'Vérifiez et supprimez les entrées incorrectes','ex.f5':'Historique complet avec noms modifiables',
+    'prog.tag':'📅 Progrès','prog.h2a':'Voyez chaque jour.','prog.h2b':'Suivez chaque tendance.',
+    'prog.p':"Le calendrier de progrès vous donne une image complète de votre parcours. Appuyez sur n'importe quel jour pour voir les calories consommées vs brûlées et votre liste complète.",
+    'prog.f1':'Calendrier mensuel avec indicateurs','prog.f2':'Résumé consommé, brûlé et solde',
+    'prog.f3':'Décomposition détaillée des macros','prog.f4':'Journal complet des repas et exercices','prog.f5':"Modifiez ou ajoutez des entrées n'importe quand",
+    'pro.lbl':'Foodia Pro','pro.ttl':'Gratuit vs Pro','pro.sub':'Commencez gratuitement. Passez au niveau supérieur quand vous en avez besoin.',
+    'free.col.ttl':'Gratuit','free.f1':'3 analyses alimentaires IA / jour','free.f2':'3 messages chat IA / jour',
+    'free.f3':'Limite 200 caractères','free.f4':'Fonctions de suivi principales','free.f5':'Publicités incluses','free.f6':'Pas d\'export PDF',
+    'pro.col.ttl':'Pro','pro.col.f1':'Analyses alimentaires illimitées','pro.col.f2':'Suivi exercice illimité',
+    'pro.col.f3':'Chat IA illimité','pro.col.f4':'Caractères illimités','pro.col.f5':'Export PDF avec images','pro.col.f6':'Sans publicité',
+    'pro.btn':'Obtenir Foodia Pro',
+    'perk1.ttl':'Analyses illimitées','perk1.p':'Scannez autant de repas que vous voulez, chaque jour.',
+    'perk2.ttl':'Nutritionniste IA','perk2.p':'Chattez sans limite avec votre nutritionniste IA.',
+    'perk3.ttl':'Export PDF','perk3.p':'Téléchargez votre historique complet avec photos incluses.',
+    'lang.lbl':'Multilingue','lang.ttl':'Disponible en 6 langues',
+    'dl.h2':'Prêt à mieux manger ?','dl.p':"Téléchargez Foodia gratuitement sur l'App Store.",'dl.small':"Disponible sur l'",'dl.strong':'App Store',
+    'foot.home':'Accueil','foot.privacy':'Confidentialité','foot.terms':"Conditions d'utilisation",'foot.support':'Support',
+    'foot.copy':'© 2026 Foodia. Tous droits réservés.'
+  },
+  de:{
+    'nav.features':'Funktionen','nav.ai':'KI-Analyse','nav.progress':'Fortschritt','nav.pro':'Pro','nav.download':'Kostenlos laden',
+    'hero.badge':'✨ Mit KI','hero.h1a':'Iss klüger.','hero.h1b':'Lebe','hero.h1c':'besser.',
+    'hero.sub':'Foodia verfolgt deine Ernährung, dein Training und deinen täglichen Fortschritt mit KI — mach einfach ein Foto deiner Mahlzeit.',
+    'hero.btn2':'Funktionen ansehen','hero.stat1':'Sprachen','hero.stat2':'KI-gestützt','hero.stat3':'Kostenlos',
+    'feat.lbl':'Alles was du brauchst','feat.ttl':'Dein vollständiger Ernährungsbegleiter',
+    'feat.sub':'Fünf leistungsstarke Bereiche, um jeden Aspekt deiner Gesundheit zu verfolgen — vom Morgenkaffee bis zum Abendtraining.',
+    'card1.ttl':'Tages-Dashboard','card1.p':'Kalorienübersicht, Makros, Wasser und 15/30-Tage-Trends — jeden Morgen auf einen Blick.',
+    'card2.ttl':'KI-Lebensmittelanalyse','card2.p':'Foto machen, Mahlzeit beschreiben oder Barcode scannen. Die KI erkennt das Gericht und berechnet die Nährwerte in Sekunden.',
+    'card3.ttl':'Trainingserfassung','card3.p':'Beschreibe dein Training im Freitext und die KI extrahiert automatisch jede Übung, Sätze, Wiederholungen und Kalorien.',
+    'card4.ttl':'Fortschrittskalender','card4.p':'Navigiere zu jedem vergangenen Tag und überprüfe oder bearbeite dein Protokoll. Dein vollständiger Verlauf, immer zugänglich.',
+    'card5.ttl':'Ernährungsprofil','card5.p':'Ziele setzen, Grundumsatz/TDEE berechnen, Allergien verwalten und den vollständigen Ernährungsverlauf als PDF exportieren.',
+    'card6.ttl':'KI-Ernährungsberater-Chat','card6.p':'Stelle deinem persönlichen KI-Ernährungsberater alles über deine Ernährung, Makros oder Gesundheitsziele — rund um die Uhr.',
+    'ai.tag':'📷 KI-Analyse','ai.h2a':'Foto machen.','ai.h2b':'Alles wissen.',
+    'ai.p':'Richte deine Kamera auf eine beliebige Mahlzeit und Foodias KI identifiziert sofort das Gericht, erkennt Zutaten und liefert eine vollständige Nährwertanalyse — Kalorien, Makros, Mikros und NutriScore.',
+    'ai.f1':'Eingabe per Foto, Text oder Barcode-Scanner','ai.f2':'Automatische Gerichtserkennung mit Konfidenzwert',
+    'ai.f3':'Vollständige Makro- und Mikronährstoffanalyse','ai.f4':'NutriScore-Bewertung von A bis E','ai.f5':'Bearbeitbare Einträge vor dem Speichern',
+    'ex.tag':'⚡ Training KI','ex.h2a':'Training erfassen','ex.h2b':'in natürlicher Sprache.',
+    'ex.p':'Beschreibe deine Trainingseinheit einfach — "4 Sätze Bankdrücken 80 kg × 10, 30 Min. Laufen" — und Foodias KI analysiert jede Übung und berechnet den Kalorienverbrauch.',
+    'ex.f1':'Trainingseingabe in natürlicher Sprache','ex.f2':'Erkennt jede Übung einzeln','ex.f3':'Kalorienverbrauch via MET × Körpergewicht',
+    'ex.f4':'Fehlerhafte Einträge prüfen und entfernen','ex.f5':'Vollständiger Trainingsverlauf mit bearbeitbaren Namen',
+    'prog.tag':'📅 Fortschritt','prog.h2a':'Jeden Tag sehen.','prog.h2b':'Jeden Trend verfolgen.',
+    'prog.p':'Der Fortschrittskalender gibt dir ein vollständiges Bild deiner Ernährungsreise. Tippe auf einen beliebigen Tag, um aufgenommene vs. verbrannte Kalorien zu sehen.',
+    'prog.f1':'Monatskalender mit Tageskennzeichnungen','prog.f2':'Übersicht: aufgenommen, verbrannt und Bilanz',
+    'prog.f3':'Detaillierte Makroanalyse pro Tag','prog.f4':'Vollständiges Mahlzeiten- und Trainingsprotokoll','prog.f5':'Einträge für jeden vergangenen Tag bearbeiten',
+    'pro.lbl':'Foodia Pro','pro.ttl':'Kostenlos vs Pro','pro.sub':'Kostenlos starten. Upgraden, wenn du mehr brauchst.',
+    'free.col.ttl':'Kostenlos','free.f1':'3 KI-Analysen / Tag','free.f2':'3 KI-Chat-Nachrichten / Tag',
+    'free.f3':'200-Zeichen-Limit','free.f4':'Kern-Tracking-Funktionen','free.f5':'Mit Werbung','free.f6':'Kein PDF-Export',
+    'pro.col.ttl':'Pro','pro.col.f1':'Unbegrenzte Mahlzeitenanalysen','pro.col.f2':'Unbegrenzte Trainingserfassung',
+    'pro.col.f3':'Unbegrenzter KI-Chat','pro.col.f4':'Unbegrenzte Zeichen','pro.col.f5':'PDF-Export mit Bildern','pro.col.f6':'Ohne Werbung',
+    'pro.btn':'Foodia Pro holen',
+    'perk1.ttl':'Unbegrenzte Analysen','perk1.p':'Scanne und analysiere so viele Mahlzeiten du willst.',
+    'perk2.ttl':'KI-Ernährungsberater','perk2.p':'Chatte unbegrenzt mit deinem persönlichen KI-Ernährungsberater.',
+    'perk3.ttl':'PDF-Export','perk3.p':'Lade deinen vollständigen Ernährungsverlauf mit Bildern herunter.',
+    'lang.lbl':'Mehrsprachig','lang.ttl':'Verfügbar in 6 Sprachen',
+    'dl.h2':'Bereit, klüger zu essen?','dl.p':'Lade Foodia kostenlos im App Store herunter.','dl.small':'Laden im','dl.strong':'App Store',
+    'foot.home':'Startseite','foot.privacy':'Datenschutz','foot.terms':'Nutzungsbedingungen','foot.support':'Support',
+    'foot.copy':'© 2026 Foodia. Alle Rechte vorbehalten.'
+  },
+  it:{
+    'nav.features':'Funzioni','nav.ai':'Analisi IA','nav.progress':'Progressi','nav.pro':'Pro','nav.download':'Scarica gratis',
+    'hero.badge':"✨ Alimentato da IA",'hero.h1a':'Mangia meglio.','hero.h1b':'Vivi','hero.h1c':'meglio.',
+    'hero.sub':"Foodia traccia la tua nutrizione, l'esercizio e i progressi quotidiani con l'IA — basta scattare una foto al tuo pasto.",
+    'hero.btn2':'Scopri le funzioni','hero.stat1':'Lingue','hero.stat2':'Con IA','hero.stat3':'Gratuito',
+    'feat.lbl':'Tutto ciò di cui hai bisogno','feat.ttl':'Il tuo compagno nutrizionale completo',
+    'feat.sub':"Cinque sezioni potenti per monitorare ogni aspetto della tua salute — dal caffè mattutino all'allenamento serale.",
+    'card1.ttl':'Dashboard quotidiana','card1.p':"Riepilogo calorico, macro, acqua e trend 15/30 giorni — tutto in un colpo d'occhio ogni mattina.",
+    'card2.ttl':'Analisi cibo con IA','card2.p':"Scatta una foto, descrivi il piatto o scansiona un codice a barre. L'IA rileva il piatto e calcola la nutrizione completa in secondi.",
+    'card3.ttl':'Tracciamento esercizi','card3.p':'Descrivi il tuo allenamento in testo libero e l\'IA estrae ogni esercizio, serie, ripetizioni e calorie bruciate automaticamente.',
+    'card4.ttl':'Calendario progressi','card4.p':'Naviga in qualsiasi giorno passato per rivedere o modificare il tuo diario. La tua cronologia completa, sempre accessibile.',
+    'card5.ttl':'Profilo nutrizionale','card5.p':'Imposta i tuoi obiettivi, calcola il tuo BMR/TDEE, gestisci le allergie ed esporta la cronologia nutrizionale in PDF.',
+    'card6.ttl':'Chat con nutrizionista IA','card6.p':'Chiedi al tuo nutrizionista IA personale qualsiasi cosa sulla dieta, i macro o gli obiettivi di salute — 24/7.',
+    'ai.tag':'📷 Analisi IA','ai.h2a':'Scatta una foto.','ai.h2b':'Sappi tutto.',
+    'ai.p':"Punta la fotocamera su qualsiasi pasto e l'IA di Foodia identifica istantaneamente il piatto, rileva gli ingredienti e fornisce un'analisi nutrizionale completa — calorie, macro, micro e NutriScore.",
+    'ai.f1':'Input tramite foto, testo o scanner codice a barre','ai.f2':'Rilevamento automatico del piatto con punteggio',
+    'ai.f3':'Analisi completa di macro e micronutrienti','ai.f4':'NutriScore da A a E','ai.f5':'Voci modificabili prima del salvataggio',
+    'ex.tag':'⚡ Esercizio IA','ex.h2a':'Registra gli allenamenti','ex.h2b':'in linguaggio naturale.',
+    'ex.p':'Descrivi semplicemente la tua sessione — "4 serie panca 80 kg × 10, 30 min corsa" — e l\'IA analizza ogni esercizio e calcola le calorie bruciate con i valori MET.',
+    'ex.f1':'Input allenamento in linguaggio naturale','ex.f2':'Rileva ogni esercizio separatamente','ex.f3':'Consumo calorico tramite MET × peso',
+    'ex.f4':'Rivedi e rimuovi le voci errate','ex.f5':'Cronologia completa con nomi modificabili',
+    'prog.tag':'📅 Progressi','prog.h2a':'Vedi ogni giorno.','prog.h2b':'Traccia ogni trend.',
+    'prog.p':'Il calendario dei progressi ti dà un quadro completo del tuo percorso nutrizionale. Tocca qualsiasi giorno per vedere calorie consumate vs bruciate e la tua lista completa.',
+    'prog.f1':'Calendario mensile con indicatori','prog.f2':'Riepilogo consumato, bruciato e bilancio',
+    'prog.f3':'Analisi dettagliata dei macro per giorno','prog.f4':'Registro completo di pasti ed esercizi','prog.f5':'Modifica o aggiungi voci per qualsiasi giorno',
+    'pro.lbl':'Foodia Pro','pro.ttl':'Gratuito vs Pro','pro.sub':'Inizia gratis. Aggiorna quando ne hai bisogno.',
+    'free.col.ttl':'Gratuito','free.f1':'3 analisi cibo IA / giorno','free.f2':'3 messaggi chat IA / giorno',
+    'free.f3':'Limite di 200 caratteri','free.f4':'Funzioni di tracciamento principali','free.f5':'Con pubblicità','free.f6':'Nessun export PDF',
+    'pro.col.ttl':'Pro','pro.col.f1':'Analisi cibo illimitate','pro.col.f2':'Tracciamento esercizi illimitato',
+    'pro.col.f3':'Chat IA illimitata','pro.col.f4':'Caratteri illimitati','pro.col.f5':'Esporta in PDF con immagini','pro.col.f6':'Senza pubblicità',
+    'pro.btn':'Ottieni Foodia Pro',
+    'perk1.ttl':'Analisi illimitate','perk1.p':'Scansiona e analizza tutti i pasti che vuoi, ogni giorno.',
+    'perk2.ttl':'Nutrizionista IA','perk2.p':'Chatta senza limiti con il tuo nutrizionista IA personale.',
+    'perk3.ttl':'Export PDF','perk3.p':'Scarica la tua cronologia nutrizionale completa con foto incluse.',
+    'lang.lbl':'Multilingua','lang.ttl':'Disponibile in 6 lingue',
+    'dl.h2':'Pronto a mangiare meglio?','dl.p':"Scarica Foodia gratuitamente sull'App Store.",'dl.small':'Scarica su','dl.strong':'App Store',
+    'foot.home':'Home','foot.privacy':'Privacy','foot.terms':'Termini di utilizzo','foot.support':'Supporto',
+    'foot.copy':'© 2026 Foodia. Tutti i diritti riservati.'
+  },
+  pt:{
+    'nav.features':'Funcionalidades','nav.ai':'Análise IA','nav.progress':'Progresso','nav.pro':'Pro','nav.download':'Baixar grátis',
+    'hero.badge':'✨ Com Inteligência Artificial','hero.h1a':'Coma melhor.','hero.h1b':'Viva','hero.h1c':'melhor.',
+    'hero.sub':'O Foodia acompanha a sua nutrição, exercício e progresso diário com IA — basta tirar uma foto à sua refeição.',
+    'hero.btn2':'Ver funcionalidades','hero.stat1':'Idiomas','hero.stat2':'Com IA','hero.stat3':'Grátis',
+    'feat.lbl':'Tudo o que precisa','feat.ttl':'O seu companheiro nutricional completo',
+    'feat.sub':'Cinco secções poderosas para acompanhar cada aspeto da sua saúde — do café da manhã ao treino da tarde.',
+    'card1.ttl':'Painel diário','card1.p':'Resumo calórico, macros, hidratação e tendências 15/30 dias — tudo de relance todas as manhãs.',
+    'card2.ttl':'Análise alimentar com IA','card2.p':'Tire uma foto, descreva a refeição ou leia um código de barras. A IA deteta o prato e calcula a nutrição completa em segundos.',
+    'card3.ttl':'Registo de exercícios','card3.p':'Descreva o seu treino em texto livre e a IA extrai automaticamente cada exercício, séries, repetições e calorias queimadas.',
+    'card4.ttl':'Calendário de progresso','card4.p':'Navegue para qualquer dia passado para rever ou editar o seu diário. O seu histórico completo, sempre acessível.',
+    'card5.ttl':'Perfil nutricional','card5.p':'Defina objetivos, calcule o seu BMR/TDEE, gira alergias e exporte o seu histórico nutricional completo em PDF.',
+    'card6.ttl':'Chat com nutricionista IA','card6.p':'Pergunte ao seu nutricionista IA pessoal qualquer coisa sobre dieta, macros ou objetivos de saúde — 24/7.',
+    'ai.tag':'📷 Análise IA','ai.h2a':'Tire uma foto.','ai.h2b':'Saiba tudo.',
+    'ai.p':"Aponte a câmara para qualquer refeição e a IA do Foodia identifica instantaneamente o prato, deteta ingredientes e fornece uma análise nutricional completa — calorias, macros, micros e NutriScore.",
+    'ai.f1':'Entrada por foto, texto ou leitor de código de barras','ai.f2':'Deteção automática do prato com pontuação',
+    'ai.f3':'Análise completa de macro e micronutrientes','ai.f4':'NutriScore de A a E','ai.f5':'Entradas editáveis antes de guardar',
+    'ex.tag':'⚡ Exercício IA','ex.h2a':'Registe treinos','ex.h2b':'em linguagem natural.',
+    'ex.p':'Descreva simplesmente a sua sessão — "4 séries de supino 80 kg × 10, 30 min de corrida" — e a IA analisa cada exercício e calcula as calorias queimadas com valores MET.',
+    'ex.f1':'Entrada de treino em linguagem natural','ex.f2':'Deteta cada exercício separadamente','ex.f3':'Gasto calórico via MET × peso corporal',
+    'ex.f4':'Reveja e remova entradas incorretas','ex.f5':'Histórico completo com nomes editáveis',
+    'prog.tag':'📅 Progresso','prog.h2a':'Veja cada dia.','prog.h2b':'Acompanhe cada tendência.',
+    'prog.p':'O calendário de progresso dá-lhe uma imagem completa da sua jornada nutricional. Toque em qualquer dia para ver calorias consumidas vs queimadas e a sua lista completa.',
+    'prog.f1':'Calendário mensal com indicadores','prog.f2':'Resumo de consumido, queimado e balanço',
+    'prog.f3':'Análise detalhada de macros por dia','prog.f4':'Registo completo de refeições e exercícios','prog.f5':'Edite ou adicione entradas para qualquer dia',
+    'pro.lbl':'Foodia Pro','pro.ttl':'Grátis vs Pro','pro.sub':'Comece de graça. Actualize quando precisar de mais.',
+    'free.col.ttl':'Grátis','free.f1':'3 análises alimentares IA / dia','free.f2':'3 mensagens chat IA / dia',
+    'free.f3':'Limite de 200 caracteres','free.f4':'Funcionalidades de registo principais','free.f5':'Com publicidade','free.f6':'Sem export PDF',
+    'pro.col.ttl':'Pro','pro.col.f1':'Análises alimentares ilimitadas','pro.col.f2':'Registo de exercício ilimitado',
+    'pro.col.f3':'Chat IA ilimitado','pro.col.f4':'Caracteres ilimitados','pro.col.f5':'Exportar para PDF com imagens','pro.col.f6':'Sem publicidade',
+    'pro.btn':'Obter Foodia Pro',
+    'perk1.ttl':'Análises ilimitadas','perk1.p':'Digitalize e analise todas as refeições que quiser, todos os dias.',
+    'perk2.ttl':'Nutricionista IA','perk2.p':'Converse sem limites com o seu nutricionista IA pessoal.',
+    'perk3.ttl':'Export PDF','perk3.p':'Descarregue o seu histórico nutricional completo com fotos incluídas.',
+    'lang.lbl':'Multilingue','lang.ttl':'Disponível em 6 idiomas',
+    'dl.h2':'Pronto para comer melhor?','dl.p':'Baixe o Foodia gratuitamente na App Store.','dl.small':'Disponível na','dl.strong':'App Store',
+    'foot.home':'Início','foot.privacy':'Privacidade','foot.terms':'Termos de utilização','foot.support':'Suporte',
+    'foot.copy':'© 2026 Foodia. Todos os direitos reservados.'
+  }
+};
+
+const LABELS = {en:'EN',es:'ES',fr:'FR',de:'DE',it:'IT',pt:'PT'};
+let cur = 'en';
+
+function setLang(l) {
+    cur = l;
+    document.querySelectorAll('[data-i18n]').forEach(el => {
+        const k = el.dataset.i18n;
+        if (T[l][k] !== undefined) el.textContent = T[l][k];
     });
+    document.getElementById('langLabel').textContent = LABELS[l];
+    document.querySelectorAll('.lang-menu button,[data-lang]').forEach(b => {
+        b.classList.toggle('active', b.dataset.lang === l);
+    });
+    document.documentElement.lang = l;
+}
+
+// Lang dropdown toggle
+const drop = document.getElementById('langDrop');
+document.getElementById('langTrigger').addEventListener('click', e => { e.stopPropagation(); drop.classList.toggle('open'); });
+document.addEventListener('click', () => drop.classList.remove('open'));
+document.querySelectorAll('.lang-menu button').forEach(b => {
+    b.addEventListener('click', e => { e.stopPropagation(); setLang(b.dataset.lang); drop.classList.remove('open'); });
+});
+
+// Mobile nav
+const ham = document.getElementById('ham');
+const mob = document.getElementById('mobNav');
+ham.addEventListener('click', () => mob.classList.toggle('open'));
+function closeNav() { mob.classList.remove('open'); }
+document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', () => mob.classList.remove('open')));
 </script>
 </body>
 </html>

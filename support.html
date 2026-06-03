@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support – Foodia</title>
+    <style>
+        :root {
+            --navy: #1A1F3A;
+            --orange: #E07340;
+            --purple: #7B6EF6;
+            --green: #4CAF50;
+            --bg: #F5F6FA;
+            --border: #E5E7EB;
+            --muted: #6B7280;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: var(--navy); background: var(--bg); }
+
+        nav {
+            position: sticky; top: 0; z-index: 100;
+            padding: 16px 48px;
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(26,31,58,0.97);
+            backdrop-filter: blur(12px);
+        }
+        .nav-logo { color: white; font-size: 22px; font-weight: 800; text-decoration: none; }
+        .nav-logo span { color: var(--orange); }
+        .nav-back { color: rgba(255,255,255,.65); text-decoration: none; font-size: 14px; font-weight: 500; transition: color .2s; }
+        .nav-back:hover { color: white; }
+
+        .hero { background: var(--navy); padding: 64px 48px 48px; }
+        .hero-inner { max-width: 800px; margin: 0 auto; }
+        .hero-tag { display: inline-block; background: rgba(123,110,246,.15); border: 1px solid rgba(123,110,246,.3); color: #a89cf8; padding: 5px 14px; border-radius: 50px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+        .hero h1 { font-size: 40px; font-weight: 900; color: white; letter-spacing: -1px; margin-bottom: 10px; }
+        .hero p { font-size: 15px; color: rgba(255,255,255,.5); }
+
+        /* CONTACT CARD */
+        .contact-bar { background: white; border-bottom: 1px solid var(--border); padding: 32px 48px; }
+        .contact-inner { max-width: 800px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+        .contact-text h2 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+        .contact-text p { font-size: 14px; color: var(--muted); }
+        .contact-btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--orange); color: white;
+            padding: 12px 24px; border-radius: 50px;
+            font-size: 15px; font-weight: 700;
+            text-decoration: none;
+            transition: background .2s, transform .2s;
+            white-space: nowrap;
+        }
+        .contact-btn:hover { background: #C5612E; transform: translateY(-1px); }
+
+        /* CATEGORIES NAV */
+        .cat-nav { background: white; border-bottom: 1px solid var(--border); padding: 0 48px; position: sticky; top: 56px; z-index: 99; }
+        .cat-nav-inner { max-width: 800px; margin: 0 auto; display: flex; gap: 0; overflow-x: auto; }
+        .cat-nav-inner::-webkit-scrollbar { display: none; }
+        .cat-link { padding: 16px 20px; font-size: 14px; font-weight: 600; color: var(--muted); text-decoration: none; white-space: nowrap; border-bottom: 2px solid transparent; transition: color .2s, border-color .2s; }
+        .cat-link:hover { color: var(--navy); }
+        .cat-link.active { color: var(--orange); border-bottom-color: var(--orange); }
+
+        /* FAQ */
+        .content { max-width: 800px; margin: 0 auto; padding: 48px 48px 80px; }
+
+        .faq-group { margin-bottom: 48px; }
+        .faq-group-title {
+            font-size: 13px; font-weight: 700;
+            letter-spacing: 1.5px; text-transform: uppercase;
+            color: var(--orange);
+            margin-bottom: 16px;
+        }
+
+        .faq-item {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            margin-bottom: 8px;
+            overflow: hidden;
+        }
+        .faq-q {
+            width: 100%; text-align: left;
+            padding: 18px 22px;
+            display: flex; align-items: center; justify-content: space-between; gap: 16px;
+            background: none; border: none; cursor: pointer;
+            font-size: 15px; font-weight: 600; color: var(--navy);
+            font-family: inherit;
+        }
+        .faq-q:hover { background: #fafafa; }
+        .faq-arrow { font-size: 18px; color: var(--muted); transition: transform .25s; flex-shrink: 0; }
+        .faq-item.open .faq-arrow { transform: rotate(180deg); }
+        .faq-a {
+            display: none;
+            padding: 0 22px 18px;
+            font-size: 15px; line-height: 1.75; color: #374151;
+        }
+        .faq-a a { color: var(--orange); text-decoration: none; }
+        .faq-a a:hover { text-decoration: underline; }
+        .faq-item.open .faq-a { display: block; }
+        .faq-a ul { padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 6px; margin: 8px 0; }
+        .faq-a ul li { padding-left: 16px; position: relative; }
+        .faq-a ul li::before { content: '·'; position: absolute; left: 4px; color: var(--orange); font-weight: 700; }
+
+        footer { background: var(--navy); padding: 40px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+        .foot-logo { font-size: 20px; font-weight: 800; color: white; }
+        .foot-logo span { color: var(--orange); }
+        .foot-links { display: flex; gap: 20px; list-style: none; flex-wrap: wrap; }
+        .foot-links a { color: rgba(255,255,255,.45); text-decoration: none; font-size: 14px; transition: color .2s; }
+        .foot-links a:hover { color: white; }
+        .foot-copy { font-size: 13px; color: rgba(255,255,255,.3); }
+
+        @media (max-width: 680px) {
+            nav { padding: 16px 20px; }
+            .hero { padding: 48px 20px 36px; }
+            .hero h1 { font-size: 28px; }
+            .contact-bar { padding: 24px 20px; }
+            .cat-nav { padding: 0 20px; }
+            .content { padding: 32px 20px 60px; }
+            footer { flex-direction: column; text-align: center; padding: 36px 20px; }
+            .foot-links { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="nav-logo">Foodia<span>.</span></a>
+    <a href="index.html" class="nav-back">← Back to home</a>
+</nav>
+
+<div class="hero">
+    <div class="hero-inner">
+        <div class="hero-tag">Help Center</div>
+        <h1>Support & Help Center</h1>
+        <p>Last Updated: May 20, 2025</p>
+    </div>
+</div>
+
+<div class="contact-bar">
+    <div class="contact-inner">
+        <div class="contact-text">
+            <h2>Can't find your answer?</h2>
+            <p>We aim to respond within 48 hours on business days. Include your device model and iOS version when reporting a technical issue.</p>
+        </div>
+        <a href="mailto:foodiahealthy@gmail.com" class="contact-btn">
+            ✉ foodiahealthy@gmail.com
+        </a>
+    </div>
+</div>
+
+<div class="cat-nav">
+    <div class="cat-nav-inner">
+        <a href="#general" class="cat-link active">General</a>
+        <a href="#ai" class="cat-link">AI Features</a>
+        <a href="#barcode" class="cat-link">Barcode & Score</a>
+        <a href="#pro" class="cat-link">Foodia Pro</a>
+        <a href="#privacy" class="cat-link">Data & Privacy</a>
+        <a href="#technical" class="cat-link">Technical</a>
+    </div>
+</div>
+
+<div class="content">
+
+    <!-- GENERAL -->
+    <div class="faq-group" id="general">
+        <div class="faq-group-title">General</div>
+
+        <div class="faq-item">
+            <button class="faq-q">What is Foodia? <span class="faq-arrow">▾</span></button>
+            <div class="faq-a">Foodia is a nutrition and fitness tracking app powered by artificial intelligence. You can log your meals by photographing your food, scanning barcodes, or entering them manually. The app also tracks your exercise, water intake, and shows your nutritional history and progress over time.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q">Is Foodia free to use? <span class="faq-arrow">▾</span></button>
+            <div class="faq-a">Yes, Foodia is free to download and use. The free version includes core features with advertisements. Foodia Pro is a paid subscription that removes ads and unlocks unlimited AI analyses.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q">In which languages is Foodia available? <span class="faq-arrow">▾</span></button>
+            <div class="faq-a">Foodia is currently available in 6 languages: English, Spanish, German, French, Italian, and Portuguese.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q">Do I need to create an account? <span class="faq-arrow">▾</span></button>
+            <div class="faq-a">No. Foodia does not require registration or login. All your data is stored locally on your device. No account creation is needed to use any feature of the app.</div>
+        </div>
+    </div>
+
+    <!-- AI FEATURES -->
+    <div class="faq-group" id="ai">
+        <div class="faq-group-title">AI Features</div>
+
+        <div class="faq-item">
+            <button class="faq-q">How does the AI meal scanner work? <span class="faq-arrow">▾</span></button>
+            <div class="faq-a">Take a photo of your food and Foodia's AI (powered by Google Gemini) will identify the dish, estimate ingredients, and calculate approximate calories and macronutrients. The more clearly the food is visible in the photo, the more accurate the result.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q">Are the AI nutritional estimates accurate? <span class="faq-arrow">▾</span></button>
+            <div class="faq-a">AI estimates are approximations based on visual analysis. Results may vary depending on portion size, cooking method, and photo quality. We recommend using barcode scanning or manual entry for packaged foods where precise values are needed. Foodia is not a medical device and should not replace professional dietary advice.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q">What is the AI chat assistant? <span class="faq-arrow">▾</span></button>
+            <div class="faq-a">The AI assistant can answer questions about nutrition, calories, macros, and healthy habits. It provides general informational responses and does not offer personalised medical or clinical advice.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q">Is there a limit to how many AI analyses I can do? <span class="faq-arrow">▾</span></button>
+            <div class="faq-a">Free users have a limited number of AI analyses per day. Foodia Pro users have unlimited access to all AI features.</div>
+        </div>
+    </div>
+
+    <!-- BARCODE -->
+    <div class="faq-group" id="barcode">
+        <div class="faq-group-title">Barcode Scanner & Foodia Score</div>
+
+        <div class="faq-item">
+            <button class="faq-q">How does the barcode scanner work? <span class="faq-arrow">▾</span></button>
+            <div class="faq-a">Point your camera at any product barcode and Foodia will retrieve its nutritional information from our food database. The result is added directly to your food diary.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q">What is the NutriScore? <span class="faq-arrow">▾</span></button>
+            <div class="faq-a">The NutriScore is a rating (A to E) that evaluates the nutritional quality of a food, taking into account factors such as calorie density, sugar content, saturated fats, protein, and fibre. It helps you make more informed food choices at a glance.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q">A product is not found when I scan its barcode. What can I do? <span class="faq-arrow">▾</span></button>
+            <div class="faq-a">If a product is not in our database, you can log it manually by entering the nutritional values from the product label. You can also contact us at <a href="mailto:foodiahealthy@gmail.com">foodiahealthy@gmail.com</a> and we will do our best to add it.</div>
+        </div>
+    </div>
+
+    <!-- PRO -->
+    <div class="faq-group" id="pro">
+        <div class="faq-group-title">Foodia Pro Subscription</div>
+
+        <div class="faq-item">
+            <button class="faq-q">What does Foodia Pro include? <span class="faq-arrow">▾</span></button>
+            <div class="faq-a">Foodia Pro removes all advertisements and unlocks:
+                <ul>
+                    <li>Unlimited AI meal analyses</li>
+                    <li>Unlimited AI chat with your nutritionist</li>
+                    <li>Unlimited characters in questions and corrections</li>
+                    <li>Export your full nutritional history to PDF with images</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q">How do I subscribe to Foodia Pro? <span class="faq-arrow">▾</span></button>
+            <div class="faq-a">You can subscribe from within the app. Monthly ($5.99/month) and annual ($59.99/year) plans are available. Payment is processed securely through Apple App Store.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q">How do I cancel my subscription? <span class="faq-arrow">▾</span></button>
+            <div class="faq-a">You can cancel anytime through your iPhone Settings: go to <strong>Settings &gt; Your Name &gt; Subscriptions &gt; Foodia Pro &gt; Cancel Subscription</strong>. Cancellation takes effect at the end of the current billing period and you will keep access to Pro features until then.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q">I was charged but I cannot access Foodia Pro features. What should I do? <span class="faq-arrow">▾</span></button>
+            <div class="faq-a">First, try closing and reopening the app. If the issue persists, go to the subscription screen inside the app and tap "Restore Purchases". If you still have problems, contact us at <a href="mailto:foodiahealthy@gmail.com">foodiahealthy@gmail.com</a> with your Apple ID and we will help you.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q">Can I get a refund? <span class="faq-arrow">▾</span></button>
+            <div class="faq-a">Refunds are handled by Apple. You can request a refund at <a href="https://reportaproblem.apple.com" target="_blank" rel="noopener">reportaproblem.apple.com</a>. We do not process refunds directly.</div>
+        </div>
+    </div>
+
+    <!-- DATA & PRIVACY -->
+    <div class="faq-group" id="privacy">
+        <div class="faq-group-title">Data & Privacy</div>
+
+        <div class="faq-item">
+            <button class="faq-q">Where is my data stored? <span class="faq-arrow">▾</span></button>
+            <div class="faq-a">All your personal data — food diary, exercise logs, profile details, and nutritional history — is stored locally on your device. We do not collect or store this data on our servers.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q">What happens to my data if I delete the app? <span class="faq-arrow">▾</span></button>
+            <div class="faq-a">Uninstalling the app removes your data from the device. iOS may retain some cached data for a period of time in case you reinstall the app. This is managed by iOS, not by Foodia.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q">Does Foodia share my data with third parties? <span class="faq-arrow">▾</span></button>
+            <div class="faq-a">We only collect your approximate location (if you grant permission) for geographic analytics. We do not sell your data. Please refer to our <a href="privacy.html">Privacy Policy</a> for full details.</div>
+        </div>
+    </div>
+
+    <!-- TECHNICAL -->
+    <div class="faq-group" id="technical">
+        <div class="faq-group-title">Technical Issues</div>
+
+        <div class="faq-item">
+            <button class="faq-q">The app is crashing or not working correctly. What should I do? <span class="faq-arrow">▾</span></button>
+            <div class="faq-a">Try the following steps:
+                <ul>
+                    <li>Close the app completely and reopen it.</li>
+                    <li>Restart your device.</li>
+                    <li>Make sure you are running the latest version of Foodia from the App Store.</li>
+                    <li>Make sure your iOS is up to date.</li>
+                </ul>
+                If the problem persists, contact us at <a href="mailto:foodiahealthy@gmail.com">foodiahealthy@gmail.com</a> with your device model, iOS version, and a description of the issue.
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q">The app is not recognising my food photo. What can I do? <span class="faq-arrow">▾</span></button>
+            <div class="faq-a">Make sure the food is well-lit and clearly visible in the photo. Avoid blurry images or photos with multiple overlapping dishes. If the AI cannot identify the food, you can add it manually or via barcode scan.</div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-q">How do I export my data as PDF? <span class="faq-arrow">▾</span></button>
+            <div class="faq-a">Go to your Profile section and select the export option. You can generate a PDF report of your nutritional data and history directly from the app. This feature requires a Foodia Pro subscription.</div>
+        </div>
+    </div>
+
+</div>
+
+<footer>
+    <div class="foot-logo">Foodia<span>.</span></div>
+    <ul class="foot-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="privacy.html">Privacy Policy</a></li>
+        <li><a href="terms.html">Terms of Use</a></li>
+        <li><a href="support.html">Support</a></li>
+    </ul>
+    <div class="foot-copy">© 2025 Foodia. All rights reserved.</div>
+</footer>
+
+<script>
+    document.querySelectorAll('.faq-q').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const item = btn.closest('.faq-item');
+            item.classList.toggle('open');
+        });
+    });
+
+    const catLinks = document.querySelectorAll('.cat-link');
+    const groups = document.querySelectorAll('.faq-group');
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                catLinks.forEach(l => l.classList.remove('active'));
+                const active = document.querySelector('.cat-link[href="#' + e.target.id + '"]');
+                if (active) active.classList.add('active');
+            }
+        });
+    }, { rootMargin: '-40% 0px -55% 0px' });
+    groups.forEach(g => observer.observe(g));
+</script>
+
+</body>
+</html>
