@@ -348,8 +348,7 @@
             <div class="compare-col free">
                 <h3 data-i18n="free.col.ttl">Free</h3>
                 <ul class="compare-list">
-                    <li><span class="ico ico-yes">✓</span><span data-i18n="free.f1">3 AI food analyses / day</span></li>
-                    <li><span class="ico ico-yes">✓</span><span data-i18n="free.f2">3 AI chat messages / day</span></li>
+                    <li><span class="ico ico-yes">✓</span><span data-i18n="free.f1">3 AI uses / day (food, exercise or chat)</span></li>
                     <li><span class="ico ico-yes">✓</span><span data-i18n="free.f3">200 character limit</span></li>
                     <li><span class="ico ico-yes">✓</span><span data-i18n="free.f4">Core tracking features</span></li>
                     <li class="dim"><span class="ico ico-no">✕</span><span data-i18n="free.f5">Includes ads</span></li>
@@ -412,254 +411,27 @@
 </footer>
 
 <script>
-const T = {
-  en:{
-    'nav.features':'Features','nav.ai':'AI Analysis','nav.progress':'Progress','nav.pro':'Pro','nav.download':'Download Free',
-    'hero.badge':'✨ Powered by AI','hero.h1a':'Eat smart.','hero.h1b':'Live','hero.h1c':'better.',
-    'hero.sub':"Foodia tracks your nutrition, exercise, and daily progress with AI — just take a photo of your meal and let the magic happen.",
-    'hero.btn2':'See Features','hero.stat1':'Languages','hero.stat2':'Powered','hero.stat3':'To start',
-    'feat.lbl':'Everything you need','feat.ttl':'Your complete nutrition companion',
-    'feat.sub':'Five powerful sections to track every aspect of your health — from your morning coffee to your evening workout.',
-    'card1.ttl':'Daily Dashboard','card1.p':'Calorie summary, macro breakdown, water intake, and 15/30-day trends — all at a glance every morning.',
-    'card2.ttl':'AI Food Analysis','card2.p':'Snap a photo, describe your meal, or scan a barcode. AI detects the dish and calculates full nutrition in seconds.',
-    'card3.ttl':'Exercise Tracking','card3.p':'Describe your workout in plain text and AI extracts each exercise, sets, reps, and calories burned automatically.',
-    'card4.ttl':'Progress Calendar','card4.p':'Navigate any past day to review or edit your food and workout log. Your full history, always accessible.',
-    'card5.ttl':'Nutritional Profile','card5.p':'Set your goals, track BMR/TDEE, manage allergies, and export your full nutritional history as a PDF.',
-    'card6.ttl':'AI Nutritionist Chat','card6.p':'Ask your personal AI nutritionist anything about your diet, macros, or health goals — 24/7, in any language.',
-    'ai.tag':'📷 AI Analysis','ai.h2a':'Take a photo.','ai.h2b':'Know everything.',
-    'ai.p':"Point your camera at any meal and Foodia's AI instantly identifies the dish, detects visible ingredients, estimates the full recipe, and delivers a complete nutritional breakdown — calories, macros, micros, and NutriScore rating.",
-    'ai.f1':'Photo, text, or barcode scanner input','ai.f2':'Automatic dish detection with confidence score',
-    'ai.f3':'Full macro & micro nutrient breakdown','ai.f4':'NutriScore quality rating from A to E','ai.f5':'Editable entries — correct before saving',
-    'ex.tag':'⚡ Exercise AI','ex.h2a':'Log workouts','ex.h2b':'in plain English.',
-    'ex.p':"No more tedious manual logging. Just describe your session the way you'd tell a friend — \"4 sets bench press 80 kg × 10, 30 min running\" — and Foodia's AI parses each exercise and calculates calories burned using MET values.",
-    'ex.f1':'Natural language workout input','ex.f2':'Detects each exercise separately','ex.f3':'Calorie burn via MET × bodyweight',
-    'ex.f4':'Review and remove incorrect entries','ex.f5':'Full exercise history with editable names',
-    'prog.tag':'📅 Progress','prog.h2a':'See every day.','prog.h2b':'Track every trend.',
-    'prog.p':"The progress calendar gives you a complete picture of your nutritional journey. Tap any day to see consumed vs burned calories, your balance, and the full list of meals and workouts — with the ability to edit anything, anytime.",
-    'prog.f1':'Monthly calendar with logged-day indicators','prog.f2':'Consumed, burned & balance summary',
-    'prog.f3':'Detailed macro breakdown per day','prog.f4':'Full meal and exercise log per day','prog.f5':'Edit or add entries for any past day',
-    'pro.lbl':'Foodia Pro','pro.ttl':'Free vs Pro','pro.sub':'Start for free. Upgrade when you need more.',
-    'free.col.ttl':'Free','free.f1':'3 AI food analyses / day','free.f2':'3 AI chat messages / day',
-    'free.f3':'200 character limit','free.f4':'Core tracking features','free.f5':'Includes ads','free.f6':'No PDF export',
-    'pro.col.ttl':'Pro','pro.col.f1':'Unlimited food analysis','pro.col.f2':'Unlimited exercise tracking',
-    'pro.col.f3':'Unlimited AI chat','pro.col.f4':'Unlimited characters','pro.col.f5':'Export to PDF with images','pro.col.f6':'No ads',
-    'pro.btn':'Get Foodia Pro',
-    'perk1.ttl':'Unlimited Analysis','perk1.p':'Scan and analyze as many meals as you want, every single day.',
-    'perk2.ttl':'AI Nutritionist','perk2.p':'Chat without limits with your personal AI nutritionist.',
-    'perk3.ttl':'PDF Export','perk3.p':'Download your complete nutritional history with images included.',
-    'lang.lbl':'Multilingual','lang.ttl':'Available in 6 languages',
-    'dl.h2':'Ready to eat smarter?','dl.p':'Download Foodia for free on the App Store.','dl.small':'Download on the','dl.strong':'App Store',
-    'foot.home':'Home','foot.privacy':'Privacy Policy','foot.terms':'Terms of Use','foot.support':'Support',
-    'foot.copy':'© 2026 Foodia. All rights reserved.'
-  },
-  es:{
-    'nav.features':'Funciones','nav.ai':'Análisis IA','nav.progress':'Progreso','nav.pro':'Pro','nav.download':'Descargar gratis',
-    'hero.badge':'✨ Con Inteligencia Artificial','hero.h1a':'Come mejor.','hero.h1b':'Vive','hero.h1c':'mejor.',
-    'hero.sub':'Foodia registra tu nutrición, ejercicio y progreso diario con IA — solo haz una foto a tu comida y deja que la magia ocurra.',
-    'hero.btn2':'Ver funciones','hero.stat1':'Idiomas','hero.stat2':'Con IA','hero.stat3':'Gratis',
-    'feat.lbl':'Todo lo que necesitas','feat.ttl':'Tu compañero nutricional completo',
-    'feat.sub':'Cinco secciones para controlar cada aspecto de tu salud — desde tu café de la mañana hasta tu entrenamiento de la tarde.',
-    'card1.ttl':'Panel diario','card1.p':'Resumen de calorías, macros, agua y tendencias de 15/30 días — todo de un vistazo cada mañana.',
-    'card2.ttl':'Análisis de comida con IA','card2.p':'Haz una foto, describe tu plato o escanea un código de barras. La IA detecta el plato y calcula toda la nutrición en segundos.',
-    'card3.ttl':'Registro de ejercicio','card3.p':'Describe tu entrenamiento en texto libre y la IA extrae cada ejercicio, series, repeticiones y calorías quemadas automáticamente.',
-    'card4.ttl':'Calendario de progreso','card4.p':'Navega cualquier día pasado para revisar o editar tu diario. Tu historial completo, siempre accesible.',
-    'card5.ttl':'Perfil nutricional','card5.p':'Establece tus objetivos, calcula tu TMB/TDEE, gestiona alergias y exporta tu historial nutricional completo en PDF.',
-    'card6.ttl':'Chat con nutricionista IA','card6.p':'Pregunta a tu nutricionista IA lo que quieras sobre tu dieta, macros u objetivos de salud — 24/7, en cualquier idioma.',
-    'ai.tag':'📷 Análisis IA','ai.h2a':'Haz una foto.','ai.h2b':'Sábelo todo.',
-    'ai.p':'Apunta tu cámara a cualquier plato y la IA de Foodia identifica el plato al instante, detecta ingredientes y ofrece un desglose nutricional completo — calorías, macros, micros y NutriScore.',
-    'ai.f1':'Entrada por foto, texto o escáner de código de barras','ai.f2':'Detección automática del plato con porcentaje de confianza',
-    'ai.f3':'Desglose completo de macros y micronutrientes','ai.f4':'NutriScore de A a E','ai.f5':'Entradas editables antes de guardar',
-    'ex.tag':'⚡ Ejercicio IA','ex.h2a':'Registra tus entrenos','ex.h2b':'en lenguaje natural.',
-    'ex.p':'Sin registros tediosos. Describe tu sesión como se la contarías a un amigo — "4 series de press banca 80 kg × 10, 30 min de carrera" — y la IA analiza cada ejercicio y calcula las calorías quemadas con valores MET.',
-    'ex.f1':'Entrada de entrenamiento en lenguaje natural','ex.f2':'Detecta cada ejercicio por separado','ex.f3':'Gasto calórico mediante MET × peso corporal',
-    'ex.f4':'Revisa y elimina entradas incorrectas','ex.f5':'Historial completo de ejercicios con nombres editables',
-    'prog.tag':'📅 Progreso','prog.h2a':'Ve cada día.','prog.h2b':'Sigue cada tendencia.',
-    'prog.p':'El calendario de progreso te da una imagen completa de tu viaje nutricional. Toca cualquier día para ver calorías consumidas vs quemadas, tu balance y el listado completo de comidas y entrenamientos.',
-    'prog.f1':'Calendario mensual con indicadores de días registrados','prog.f2':'Resumen de consumido, quemado y balance',
-    'prog.f3':'Desglose detallado de macros por día','prog.f4':'Registro completo de comidas y ejercicios por día','prog.f5':'Edita o añade entradas en cualquier día pasado',
-    'pro.lbl':'Foodia Pro','pro.ttl':'Gratis vs Pro','pro.sub':'Empieza gratis. Actualiza cuando necesites más.',
-    'free.col.ttl':'Gratis','free.f1':'3 análisis de comida con IA / día','free.f2':'3 mensajes de chat IA / día',
-    'free.f3':'Límite de 200 caracteres','free.f4':'Funciones principales de seguimiento','free.f5':'Incluye anuncios','free.f6':'Sin exportar PDF',
-    'pro.col.ttl':'Pro','pro.col.f1':'Análisis de comida ilimitados','pro.col.f2':'Registro de ejercicio ilimitado',
-    'pro.col.f3':'Chat con IA ilimitado','pro.col.f4':'Caracteres ilimitados','pro.col.f5':'Exportar a PDF con imágenes','pro.col.f6':'Sin anuncios',
-    'pro.btn':'Obtener Foodia Pro',
-    'perk1.ttl':'Análisis ilimitados','perk1.p':'Escanea y analiza todos los platos que quieras, cada día.',
-    'perk2.ttl':'Nutricionista IA','perk2.p':'Chatea sin límites con tu nutricionista IA personal.',
-    'perk3.ttl':'Exportar PDF','perk3.p':'Descarga tu historial nutricional completo con imágenes incluidas.',
-    'lang.lbl':'Multiidioma','lang.ttl':'Disponible en 6 idiomas',
-    'dl.h2':'¿Listo para comer mejor?','dl.p':'Descarga Foodia gratis en el App Store.','dl.small':'Disponible en','dl.strong':'App Store',
-    'foot.home':'Inicio','foot.privacy':'Política de privacidad','foot.terms':'Términos de uso','foot.support':'Soporte',
-    'foot.copy':'© 2026 Foodia. Todos los derechos reservados.'
-  },
-  fr:{
-    'nav.features':'Fonctions','nav.ai':'Analyse IA','nav.progress':'Progrès','nav.pro':'Pro','nav.download':'Télécharger',
-    'hero.badge':"✨ Propulsé par l'IA",'hero.h1a':'Mangez mieux.','hero.h1b':'Vivez','hero.h1c':'mieux.',
-    'hero.sub':"Foodia suit votre nutrition, votre exercice et vos progrès quotidiens avec l'IA — prenez simplement une photo de votre repas.",
-    'hero.btn2':'Voir les fonctions','hero.stat1':'Langues','hero.stat2':'Avec IA','hero.stat3':'Gratuit',
-    'feat.lbl':'Tout ce dont vous avez besoin','feat.ttl':'Votre compagnon nutritionnel complet',
-    'feat.sub':"Cinq sections puissantes pour suivre chaque aspect de votre santé — du café du matin à l'entraînement du soir.",
-    'card1.ttl':'Tableau de bord quotidien','card1.p':"Résumé calorique, macros, hydratation et tendances 15/30 jours — tout en un coup d'œil chaque matin.",
-    'card2.ttl':'Analyse alimentaire IA','card2.p':"Prenez une photo, décrivez votre repas ou scannez un code-barres. L'IA détecte le plat et calcule la nutrition complète en secondes.",
-    'card3.ttl':"Suivi de l'exercice",'card3.p':'Décrivez votre entraînement en texte libre et l\'IA extrait chaque exercice, séries, répétitions et calories brûlées automatiquement.',
-    'card4.ttl':'Calendrier de progrès','card4.p':"Naviguez n'importe quel jour passé pour revoir ou modifier votre journal. Votre historique complet, toujours accessible.",
-    'card5.ttl':'Profil nutritionnel','card5.p':'Fixez vos objectifs, calculez votre MB/TDEE, gérez les allergies et exportez votre historique nutritionnel en PDF.',
-    'card6.ttl':'Chat avec nutritionniste IA','card6.p':'Posez toutes vos questions à votre nutritionniste IA personnel sur votre régime, vos macros ou vos objectifs — 24/7.',
-    'ai.tag':'📷 Analyse IA','ai.h2a':'Prenez une photo.','ai.h2b':'Sachez tout.',
-    'ai.p':"Pointez votre caméra sur n'importe quel repas et l'IA de Foodia identifie instantanément le plat, détecte les ingrédients et fournit une analyse nutritionnelle complète — calories, macros, micros et NutriScore.",
-    'ai.f1':'Saisie par photo, texte ou scanner code-barres','ai.f2':'Détection automatique du plat avec score de confiance',
-    'ai.f3':'Décomposition complète des macros et micronutriments','ai.f4':'NutriScore de A à E','ai.f5':'Entrées modifiables avant enregistrement',
-    'ex.tag':'⚡ Exercice IA','ex.h2a':'Enregistrez vos séances','ex.h2b':'en langage naturel.',
-    'ex.p':"Décrivez simplement votre séance — \"4 séries développé couché 80 kg × 10, 30 min course\" — et l'IA analyse chaque exercice et calcule les calories brûlées.",
-    'ex.f1':'Saisie en langage naturel','ex.f2':'Détecte chaque exercice séparément','ex.f3':'Dépense calorique via MET × poids',
-    'ex.f4':'Vérifiez et supprimez les entrées incorrectes','ex.f5':'Historique complet avec noms modifiables',
-    'prog.tag':'📅 Progrès','prog.h2a':'Voyez chaque jour.','prog.h2b':'Suivez chaque tendance.',
-    'prog.p':"Le calendrier de progrès vous donne une image complète de votre parcours. Appuyez sur n'importe quel jour pour voir les calories consommées vs brûlées et votre liste complète.",
-    'prog.f1':'Calendrier mensuel avec indicateurs','prog.f2':'Résumé consommé, brûlé et solde',
-    'prog.f3':'Décomposition détaillée des macros','prog.f4':'Journal complet des repas et exercices','prog.f5':"Modifiez ou ajoutez des entrées n'importe quand",
-    'pro.lbl':'Foodia Pro','pro.ttl':'Gratuit vs Pro','pro.sub':'Commencez gratuitement. Passez au niveau supérieur quand vous en avez besoin.',
-    'free.col.ttl':'Gratuit','free.f1':'3 analyses alimentaires IA / jour','free.f2':'3 messages chat IA / jour',
-    'free.f3':'Limite 200 caractères','free.f4':'Fonctions de suivi principales','free.f5':'Publicités incluses','free.f6':'Pas d\'export PDF',
-    'pro.col.ttl':'Pro','pro.col.f1':'Analyses alimentaires illimitées','pro.col.f2':'Suivi exercice illimité',
-    'pro.col.f3':'Chat IA illimité','pro.col.f4':'Caractères illimités','pro.col.f5':'Export PDF avec images','pro.col.f6':'Sans publicité',
-    'pro.btn':'Obtenir Foodia Pro',
-    'perk1.ttl':'Analyses illimitées','perk1.p':'Scannez autant de repas que vous voulez, chaque jour.',
-    'perk2.ttl':'Nutritionniste IA','perk2.p':'Chattez sans limite avec votre nutritionniste IA.',
-    'perk3.ttl':'Export PDF','perk3.p':'Téléchargez votre historique complet avec photos incluses.',
-    'lang.lbl':'Multilingue','lang.ttl':'Disponible en 6 langues',
-    'dl.h2':'Prêt à mieux manger ?','dl.p':"Téléchargez Foodia gratuitement sur l'App Store.",'dl.small':"Disponible sur l'",'dl.strong':'App Store',
-    'foot.home':'Accueil','foot.privacy':'Confidentialité','foot.terms':"Conditions d'utilisation",'foot.support':'Support',
-    'foot.copy':'© 2026 Foodia. Tous droits réservés.'
-  },
-  de:{
-    'nav.features':'Funktionen','nav.ai':'KI-Analyse','nav.progress':'Fortschritt','nav.pro':'Pro','nav.download':'Kostenlos laden',
-    'hero.badge':'✨ Mit KI','hero.h1a':'Iss klüger.','hero.h1b':'Lebe','hero.h1c':'besser.',
-    'hero.sub':'Foodia verfolgt deine Ernährung, dein Training und deinen täglichen Fortschritt mit KI — mach einfach ein Foto deiner Mahlzeit.',
-    'hero.btn2':'Funktionen ansehen','hero.stat1':'Sprachen','hero.stat2':'KI-gestützt','hero.stat3':'Kostenlos',
-    'feat.lbl':'Alles was du brauchst','feat.ttl':'Dein vollständiger Ernährungsbegleiter',
-    'feat.sub':'Fünf leistungsstarke Bereiche, um jeden Aspekt deiner Gesundheit zu verfolgen — vom Morgenkaffee bis zum Abendtraining.',
-    'card1.ttl':'Tages-Dashboard','card1.p':'Kalorienübersicht, Makros, Wasser und 15/30-Tage-Trends — jeden Morgen auf einen Blick.',
-    'card2.ttl':'KI-Lebensmittelanalyse','card2.p':'Foto machen, Mahlzeit beschreiben oder Barcode scannen. Die KI erkennt das Gericht und berechnet die Nährwerte in Sekunden.',
-    'card3.ttl':'Trainingserfassung','card3.p':'Beschreibe dein Training im Freitext und die KI extrahiert automatisch jede Übung, Sätze, Wiederholungen und Kalorien.',
-    'card4.ttl':'Fortschrittskalender','card4.p':'Navigiere zu jedem vergangenen Tag und überprüfe oder bearbeite dein Protokoll. Dein vollständiger Verlauf, immer zugänglich.',
-    'card5.ttl':'Ernährungsprofil','card5.p':'Ziele setzen, Grundumsatz/TDEE berechnen, Allergien verwalten und den vollständigen Ernährungsverlauf als PDF exportieren.',
-    'card6.ttl':'KI-Ernährungsberater-Chat','card6.p':'Stelle deinem persönlichen KI-Ernährungsberater alles über deine Ernährung, Makros oder Gesundheitsziele — rund um die Uhr.',
-    'ai.tag':'📷 KI-Analyse','ai.h2a':'Foto machen.','ai.h2b':'Alles wissen.',
-    'ai.p':'Richte deine Kamera auf eine beliebige Mahlzeit und Foodias KI identifiziert sofort das Gericht, erkennt Zutaten und liefert eine vollständige Nährwertanalyse — Kalorien, Makros, Mikros und NutriScore.',
-    'ai.f1':'Eingabe per Foto, Text oder Barcode-Scanner','ai.f2':'Automatische Gerichtserkennung mit Konfidenzwert',
-    'ai.f3':'Vollständige Makro- und Mikronährstoffanalyse','ai.f4':'NutriScore-Bewertung von A bis E','ai.f5':'Bearbeitbare Einträge vor dem Speichern',
-    'ex.tag':'⚡ Training KI','ex.h2a':'Training erfassen','ex.h2b':'in natürlicher Sprache.',
-    'ex.p':'Beschreibe deine Trainingseinheit einfach — "4 Sätze Bankdrücken 80 kg × 10, 30 Min. Laufen" — und Foodias KI analysiert jede Übung und berechnet den Kalorienverbrauch.',
-    'ex.f1':'Trainingseingabe in natürlicher Sprache','ex.f2':'Erkennt jede Übung einzeln','ex.f3':'Kalorienverbrauch via MET × Körpergewicht',
-    'ex.f4':'Fehlerhafte Einträge prüfen und entfernen','ex.f5':'Vollständiger Trainingsverlauf mit bearbeitbaren Namen',
-    'prog.tag':'📅 Fortschritt','prog.h2a':'Jeden Tag sehen.','prog.h2b':'Jeden Trend verfolgen.',
-    'prog.p':'Der Fortschrittskalender gibt dir ein vollständiges Bild deiner Ernährungsreise. Tippe auf einen beliebigen Tag, um aufgenommene vs. verbrannte Kalorien zu sehen.',
-    'prog.f1':'Monatskalender mit Tageskennzeichnungen','prog.f2':'Übersicht: aufgenommen, verbrannt und Bilanz',
-    'prog.f3':'Detaillierte Makroanalyse pro Tag','prog.f4':'Vollständiges Mahlzeiten- und Trainingsprotokoll','prog.f5':'Einträge für jeden vergangenen Tag bearbeiten',
-    'pro.lbl':'Foodia Pro','pro.ttl':'Kostenlos vs Pro','pro.sub':'Kostenlos starten. Upgraden, wenn du mehr brauchst.',
-    'free.col.ttl':'Kostenlos','free.f1':'3 KI-Analysen / Tag','free.f2':'3 KI-Chat-Nachrichten / Tag',
-    'free.f3':'200-Zeichen-Limit','free.f4':'Kern-Tracking-Funktionen','free.f5':'Mit Werbung','free.f6':'Kein PDF-Export',
-    'pro.col.ttl':'Pro','pro.col.f1':'Unbegrenzte Mahlzeitenanalysen','pro.col.f2':'Unbegrenzte Trainingserfassung',
-    'pro.col.f3':'Unbegrenzter KI-Chat','pro.col.f4':'Unbegrenzte Zeichen','pro.col.f5':'PDF-Export mit Bildern','pro.col.f6':'Ohne Werbung',
-    'pro.btn':'Foodia Pro holen',
-    'perk1.ttl':'Unbegrenzte Analysen','perk1.p':'Scanne und analysiere so viele Mahlzeiten du willst.',
-    'perk2.ttl':'KI-Ernährungsberater','perk2.p':'Chatte unbegrenzt mit deinem persönlichen KI-Ernährungsberater.',
-    'perk3.ttl':'PDF-Export','perk3.p':'Lade deinen vollständigen Ernährungsverlauf mit Bildern herunter.',
-    'lang.lbl':'Mehrsprachig','lang.ttl':'Verfügbar in 6 Sprachen',
-    'dl.h2':'Bereit, klüger zu essen?','dl.p':'Lade Foodia kostenlos im App Store herunter.','dl.small':'Laden im','dl.strong':'App Store',
-    'foot.home':'Startseite','foot.privacy':'Datenschutz','foot.terms':'Nutzungsbedingungen','foot.support':'Support',
-    'foot.copy':'© 2026 Foodia. Alle Rechte vorbehalten.'
-  },
-  it:{
-    'nav.features':'Funzioni','nav.ai':'Analisi IA','nav.progress':'Progressi','nav.pro':'Pro','nav.download':'Scarica gratis',
-    'hero.badge':"✨ Alimentato da IA",'hero.h1a':'Mangia meglio.','hero.h1b':'Vivi','hero.h1c':'meglio.',
-    'hero.sub':"Foodia traccia la tua nutrizione, l'esercizio e i progressi quotidiani con l'IA — basta scattare una foto al tuo pasto.",
-    'hero.btn2':'Scopri le funzioni','hero.stat1':'Lingue','hero.stat2':'Con IA','hero.stat3':'Gratuito',
-    'feat.lbl':'Tutto ciò di cui hai bisogno','feat.ttl':'Il tuo compagno nutrizionale completo',
-    'feat.sub':"Cinque sezioni potenti per monitorare ogni aspetto della tua salute — dal caffè mattutino all'allenamento serale.",
-    'card1.ttl':'Dashboard quotidiana','card1.p':"Riepilogo calorico, macro, acqua e trend 15/30 giorni — tutto in un colpo d'occhio ogni mattina.",
-    'card2.ttl':'Analisi cibo con IA','card2.p':"Scatta una foto, descrivi il piatto o scansiona un codice a barre. L'IA rileva il piatto e calcola la nutrizione completa in secondi.",
-    'card3.ttl':'Tracciamento esercizi','card3.p':'Descrivi il tuo allenamento in testo libero e l\'IA estrae ogni esercizio, serie, ripetizioni e calorie bruciate automaticamente.',
-    'card4.ttl':'Calendario progressi','card4.p':'Naviga in qualsiasi giorno passato per rivedere o modificare il tuo diario. La tua cronologia completa, sempre accessibile.',
-    'card5.ttl':'Profilo nutrizionale','card5.p':'Imposta i tuoi obiettivi, calcola il tuo BMR/TDEE, gestisci le allergie ed esporta la cronologia nutrizionale in PDF.',
-    'card6.ttl':'Chat con nutrizionista IA','card6.p':'Chiedi al tuo nutrizionista IA personale qualsiasi cosa sulla dieta, i macro o gli obiettivi di salute — 24/7.',
-    'ai.tag':'📷 Analisi IA','ai.h2a':'Scatta una foto.','ai.h2b':'Sappi tutto.',
-    'ai.p':"Punta la fotocamera su qualsiasi pasto e l'IA di Foodia identifica istantaneamente il piatto, rileva gli ingredienti e fornisce un'analisi nutrizionale completa — calorie, macro, micro e NutriScore.",
-    'ai.f1':'Input tramite foto, testo o scanner codice a barre','ai.f2':'Rilevamento automatico del piatto con punteggio',
-    'ai.f3':'Analisi completa di macro e micronutrienti','ai.f4':'NutriScore da A a E','ai.f5':'Voci modificabili prima del salvataggio',
-    'ex.tag':'⚡ Esercizio IA','ex.h2a':'Registra gli allenamenti','ex.h2b':'in linguaggio naturale.',
-    'ex.p':'Descrivi semplicemente la tua sessione — "4 serie panca 80 kg × 10, 30 min corsa" — e l\'IA analizza ogni esercizio e calcola le calorie bruciate con i valori MET.',
-    'ex.f1':'Input allenamento in linguaggio naturale','ex.f2':'Rileva ogni esercizio separatamente','ex.f3':'Consumo calorico tramite MET × peso',
-    'ex.f4':'Rivedi e rimuovi le voci errate','ex.f5':'Cronologia completa con nomi modificabili',
-    'prog.tag':'📅 Progressi','prog.h2a':'Vedi ogni giorno.','prog.h2b':'Traccia ogni trend.',
-    'prog.p':'Il calendario dei progressi ti dà un quadro completo del tuo percorso nutrizionale. Tocca qualsiasi giorno per vedere calorie consumate vs bruciate e la tua lista completa.',
-    'prog.f1':'Calendario mensile con indicatori','prog.f2':'Riepilogo consumato, bruciato e bilancio',
-    'prog.f3':'Analisi dettagliata dei macro per giorno','prog.f4':'Registro completo di pasti ed esercizi','prog.f5':'Modifica o aggiungi voci per qualsiasi giorno',
-    'pro.lbl':'Foodia Pro','pro.ttl':'Gratuito vs Pro','pro.sub':'Inizia gratis. Aggiorna quando ne hai bisogno.',
-    'free.col.ttl':'Gratuito','free.f1':'3 analisi cibo IA / giorno','free.f2':'3 messaggi chat IA / giorno',
-    'free.f3':'Limite di 200 caratteri','free.f4':'Funzioni di tracciamento principali','free.f5':'Con pubblicità','free.f6':'Nessun export PDF',
-    'pro.col.ttl':'Pro','pro.col.f1':'Analisi cibo illimitate','pro.col.f2':'Tracciamento esercizi illimitato',
-    'pro.col.f3':'Chat IA illimitata','pro.col.f4':'Caratteri illimitati','pro.col.f5':'Esporta in PDF con immagini','pro.col.f6':'Senza pubblicità',
-    'pro.btn':'Ottieni Foodia Pro',
-    'perk1.ttl':'Analisi illimitate','perk1.p':'Scansiona e analizza tutti i pasti che vuoi, ogni giorno.',
-    'perk2.ttl':'Nutrizionista IA','perk2.p':'Chatta senza limiti con il tuo nutrizionista IA personale.',
-    'perk3.ttl':'Export PDF','perk3.p':'Scarica la tua cronologia nutrizionale completa con foto incluse.',
-    'lang.lbl':'Multilingua','lang.ttl':'Disponibile in 6 lingue',
-    'dl.h2':'Pronto a mangiare meglio?','dl.p':"Scarica Foodia gratuitamente sull'App Store.",'dl.small':'Scarica su','dl.strong':'App Store',
-    'foot.home':'Home','foot.privacy':'Privacy','foot.terms':'Termini di utilizzo','foot.support':'Supporto',
-    'foot.copy':'© 2026 Foodia. Tutti i diritti riservati.'
-  },
-  pt:{
-    'nav.features':'Funcionalidades','nav.ai':'Análise IA','nav.progress':'Progresso','nav.pro':'Pro','nav.download':'Baixar grátis',
-    'hero.badge':'✨ Com Inteligência Artificial','hero.h1a':'Coma melhor.','hero.h1b':'Viva','hero.h1c':'melhor.',
-    'hero.sub':'O Foodia acompanha a sua nutrição, exercício e progresso diário com IA — basta tirar uma foto à sua refeição.',
-    'hero.btn2':'Ver funcionalidades','hero.stat1':'Idiomas','hero.stat2':'Com IA','hero.stat3':'Grátis',
-    'feat.lbl':'Tudo o que precisa','feat.ttl':'O seu companheiro nutricional completo',
-    'feat.sub':'Cinco secções poderosas para acompanhar cada aspeto da sua saúde — do café da manhã ao treino da tarde.',
-    'card1.ttl':'Painel diário','card1.p':'Resumo calórico, macros, hidratação e tendências 15/30 dias — tudo de relance todas as manhãs.',
-    'card2.ttl':'Análise alimentar com IA','card2.p':'Tire uma foto, descreva a refeição ou leia um código de barras. A IA deteta o prato e calcula a nutrição completa em segundos.',
-    'card3.ttl':'Registo de exercícios','card3.p':'Descreva o seu treino em texto livre e a IA extrai automaticamente cada exercício, séries, repetições e calorias queimadas.',
-    'card4.ttl':'Calendário de progresso','card4.p':'Navegue para qualquer dia passado para rever ou editar o seu diário. O seu histórico completo, sempre acessível.',
-    'card5.ttl':'Perfil nutricional','card5.p':'Defina objetivos, calcule o seu BMR/TDEE, gira alergias e exporte o seu histórico nutricional completo em PDF.',
-    'card6.ttl':'Chat com nutricionista IA','card6.p':'Pergunte ao seu nutricionista IA pessoal qualquer coisa sobre dieta, macros ou objetivos de saúde — 24/7.',
-    'ai.tag':'📷 Análise IA','ai.h2a':'Tire uma foto.','ai.h2b':'Saiba tudo.',
-    'ai.p':"Aponte a câmara para qualquer refeição e a IA do Foodia identifica instantaneamente o prato, deteta ingredientes e fornece uma análise nutricional completa — calorias, macros, micros e NutriScore.",
-    'ai.f1':'Entrada por foto, texto ou leitor de código de barras','ai.f2':'Deteção automática do prato com pontuação',
-    'ai.f3':'Análise completa de macro e micronutrientes','ai.f4':'NutriScore de A a E','ai.f5':'Entradas editáveis antes de guardar',
-    'ex.tag':'⚡ Exercício IA','ex.h2a':'Registe treinos','ex.h2b':'em linguagem natural.',
-    'ex.p':'Descreva simplesmente a sua sessão — "4 séries de supino 80 kg × 10, 30 min de corrida" — e a IA analisa cada exercício e calcula as calorias queimadas com valores MET.',
-    'ex.f1':'Entrada de treino em linguagem natural','ex.f2':'Deteta cada exercício separadamente','ex.f3':'Gasto calórico via MET × peso corporal',
-    'ex.f4':'Reveja e remova entradas incorretas','ex.f5':'Histórico completo com nomes editáveis',
-    'prog.tag':'📅 Progresso','prog.h2a':'Veja cada dia.','prog.h2b':'Acompanhe cada tendência.',
-    'prog.p':'O calendário de progresso dá-lhe uma imagem completa da sua jornada nutricional. Toque em qualquer dia para ver calorias consumidas vs queimadas e a sua lista completa.',
-    'prog.f1':'Calendário mensal com indicadores','prog.f2':'Resumo de consumido, queimado e balanço',
-    'prog.f3':'Análise detalhada de macros por dia','prog.f4':'Registo completo de refeições e exercícios','prog.f5':'Edite ou adicione entradas para qualquer dia',
-    'pro.lbl':'Foodia Pro','pro.ttl':'Grátis vs Pro','pro.sub':'Comece de graça. Actualize quando precisar de mais.',
-    'free.col.ttl':'Grátis','free.f1':'3 análises alimentares IA / dia','free.f2':'3 mensagens chat IA / dia',
-    'free.f3':'Limite de 200 caracteres','free.f4':'Funcionalidades de registo principais','free.f5':'Com publicidade','free.f6':'Sem export PDF',
-    'pro.col.ttl':'Pro','pro.col.f1':'Análises alimentares ilimitadas','pro.col.f2':'Registo de exercício ilimitado',
-    'pro.col.f3':'Chat IA ilimitado','pro.col.f4':'Caracteres ilimitados','pro.col.f5':'Exportar para PDF com imagens','pro.col.f6':'Sem publicidade',
-    'pro.btn':'Obter Foodia Pro',
-    'perk1.ttl':'Análises ilimitadas','perk1.p':'Digitalize e analise todas as refeições que quiser, todos os dias.',
-    'perk2.ttl':'Nutricionista IA','perk2.p':'Converse sem limites com o seu nutricionista IA pessoal.',
-    'perk3.ttl':'Export PDF','perk3.p':'Descarregue o seu histórico nutricional completo com fotos incluídas.',
-    'lang.lbl':'Multilingue','lang.ttl':'Disponível em 6 idiomas',
-    'dl.h2':'Pronto para comer melhor?','dl.p':'Baixe o Foodia gratuitamente na App Store.','dl.small':'Disponível na','dl.strong':'App Store',
-    'foot.home':'Início','foot.privacy':'Privacidade','foot.terms':'Termos de utilização','foot.support':'Suporte',
-    'foot.copy':'© 2026 Foodia. Todos os direitos reservados.'
-  }
-};
-
+const cache = {};
 const LABELS = {en:'EN',es:'ES',fr:'FR',de:'DE',it:'IT',pt:'PT'};
 let cur = 'en';
 
-function setLang(l) {
+async function loadLang(l) {
+    if (!cache[l]) {
+        const r = await fetch(`locales/${l}.json`);
+        cache[l] = await r.json();
+    }
+    return cache[l];
+}
+
+async function setLang(l) {
+    const t = await loadLang(l);
     cur = l;
     document.querySelectorAll('[data-i18n]').forEach(el => {
-        const k = el.dataset.i18n;
-        if (T[l][k] !== undefined) el.textContent = T[l][k];
+        const v = t[el.dataset.i18n];
+        if (v !== undefined) el.textContent = v;
     });
     document.getElementById('langLabel').textContent = LABELS[l];
-    document.querySelectorAll('.lang-menu button,[data-lang]').forEach(b => {
+    document.querySelectorAll('.lang-menu button, .mobile-lang button').forEach(b => {
         b.classList.toggle('active', b.dataset.lang === l);
     });
     document.documentElement.lang = l;
@@ -672,6 +444,9 @@ document.addEventListener('click', () => drop.classList.remove('open'));
 document.querySelectorAll('.lang-menu button').forEach(b => {
     b.addEventListener('click', e => { e.stopPropagation(); setLang(b.dataset.lang); drop.classList.remove('open'); });
 });
+document.querySelectorAll('.mobile-lang button').forEach(b => {
+    b.addEventListener('click', () => setLang(b.dataset.lang));
+});
 
 // Mobile nav
 const ham = document.getElementById('ham');
@@ -679,6 +454,10 @@ const mob = document.getElementById('mobNav');
 ham.addEventListener('click', () => mob.classList.toggle('open'));
 function closeNav() { mob.classList.remove('open'); }
 document.querySelectorAll('a[href^="#"]').forEach(a => a.addEventListener('click', () => mob.classList.remove('open')));
+
+// Load default language
+setLang('en');
+
 </script>
 </body>
 </html>
